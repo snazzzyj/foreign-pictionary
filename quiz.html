@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Games Night Quiz — Big Screen Presentation</title>
+  <link rel="stylesheet" href="src/css/main.css">
+  <link rel="stylesheet" href="src/css/quiz.css">
+</head>
+<body>
+  <!-- Header Bar -->
+  <header class="app-header">
+    <div class="brand-section">
+      <span class="brand-icon">🏆</span>
+      <div>
+        <h1 class="brand-title">Games Night Championship</h1>
+        <p class="brand-subtitle">Quiz & Foreign Pictionary Master</p>
+      </div>
+    </div>
+
+    <!-- Right Header Action Controls -->
+    <div style="display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;">
+      <a href="index.html" class="btn btn-glass" style="padding: 0.5rem 0.9rem; font-size: 0.85rem;" title="Go to Foreign Pictionary Host Controller">
+        🎨 Pictionary Host
+      </a>
+      <a href="display.html" target="_blank" class="btn btn-glass" style="padding: 0.5rem 0.9rem; font-size: 0.85rem;" title="Open Crowd Display in New Tab">
+        📺 Crowd Display
+      </a>
+      <button id="btn-scores-modal" class="btn btn-glass" style="padding: 0.5rem 0.9rem; font-size: 0.85rem;">
+        📊 Team Scores
+      </button>
+      <button id="btn-answer-key-modal" class="btn btn-glass" style="padding: 0.5rem 0.9rem; font-size: 0.85rem;">
+        🔑 Answer Key
+      </button>
+      <button id="btn-mute" class="btn btn-glass" style="padding: 0.5rem 0.9rem; font-size: 0.85rem;">
+        🔊 Sound FX
+      </button>
+      <button id="btn-fullscreen" class="btn btn-glass" style="padding: 0.5rem 0.9rem; font-size: 0.85rem;">
+        ⛶ Fullscreen
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Quiz Layout -->
+  <main class="quiz-layout">
+    <!-- Top Navigation Tabs -->
+    <div class="quiz-topbar">
+      <nav class="quiz-round-tabs">
+        <button class="quiz-tab active" data-target="intro">
+          <span>🌟 Intro & Teams</span>
+        </button>
+        <button class="quiz-tab" data-target="round-1">
+          <span>🔞 Round 1: Innuendo Lingo</span>
+        </button>
+        <button class="quiz-tab" data-target="round-2">
+          <span>🤪 Round 2: Phunny Phrases</span>
+        </button>
+        <button class="quiz-tab" data-target="round-3">
+          <span>🌍 Round 3: Guesstination</span>
+        </button>
+        <button class="quiz-tab" data-target="round-4">
+          <span>🎨 Round 4: Pictionary</span>
+        </button>
+      </nav>
+
+      <div style="color: var(--text-muted); font-size: 0.85rem; font-weight: 600;">
+        <span>Use <kbd class="kbd-hint">◀</kbd> <kbd class="kbd-hint">▶</kbd> to Navigate • <kbd class="kbd-hint">Space</kbd> to Reveal • <kbd class="kbd-hint">G</kbd> Grid</span>
+      </div>
+    </div>
+
+    <!-- =========================================================================
+         SECTION 1: INTRO & GAMES NIGHT OVERVIEW
+         ========================================================================= -->
+    <section id="quiz-intro-section" class="intro-hero" style="display: flex;">
+      <div style="font-size: 3.5rem;">🎉</div>
+      <h2 class="intro-title">Welcome to Games Night!</h2>
+      <p class="intro-subtitle">
+        4 exciting rounds of international trivia, hilarious phrases, geographic mystery, and lightning-fast foreign language pictionary.
+      </p>
+
+      <!-- Team Rules Badge -->
+      <div class="team-rules-card">
+        <div class="team-rule-item">
+          <span>👥</span>
+          <span><strong>2 Players</strong> per Team</span>
+        </div>
+        <div class="team-rule-item">
+          <span>🏷️</span>
+          <span>Pick a creative <strong>Team Name</strong></span>
+        </div>
+        <div class="team-rule-item">
+          <span>📝</span>
+          <span>Write all answers on your <strong>Paper Sheet</strong></span>
+        </div>
+      </div>
+
+      <!-- 4 Rounds Showcase Cards -->
+      <div class="rounds-grid-showcase" style="width: 100%;">
+        <!-- Round 1 Card -->
+        <div class="round-showcase-card" data-round="1">
+          <div class="round-card-header">
+            <span class="round-number-pill">Round 1</span>
+            <span style="font-size: 1.5rem;">🔞</span>
+          </div>
+          <div class="round-card-title">Innuendo Lingo</div>
+          <p class="round-card-desc">8 innocent foreign words that sound suspiciously dirty in English. 3-option multiple choice!</p>
+          <div class="round-card-meta">
+            <span>8 Questions</span>
+            <span>Multiple Choice</span>
+          </div>
+          <button class="btn btn-primary btn-launch-round" data-round="round-1" style="margin-top: 0.5rem;">
+            ▶ Start Round 1
+          </button>
+        </div>
+
+        <!-- Round 2 Card -->
+        <div class="round-showcase-card" data-round="2">
+          <div class="round-card-header">
+            <span class="round-number-pill">Round 2</span>
+            <span style="font-size: 1.5rem;">🤪</span>
+          </div>
+          <div class="round-card-title">Phunny Phrases</div>
+          <p class="round-card-desc">8 bizarre idioms from around the globe. We show the literal translation, you write what it actually means!</p>
+          <div class="round-card-meta">
+            <span>8 Questions</span>
+            <span>Written Answers</span>
+          </div>
+          <button class="btn btn-primary btn-launch-round" data-round="round-2" style="margin-top: 0.5rem;">
+            ▶ Start Round 2
+          </button>
+        </div>
+
+        <!-- Round 3 Card -->
+        <div class="round-showcase-card" data-round="3">
+          <div class="round-card-header">
+            <span class="round-number-pill">Round 3</span>
+            <span style="font-size: 1.5rem;">🌍</span>
+          </div>
+          <div class="round-card-title">Guesstination Unknown</div>
+          <p class="round-card-desc">Mystery country identification based on landmark, geography, and cultural clues.</p>
+          <div class="round-card-meta">
+            <span>6 Rounds</span>
+            <span>Country Name</span>
+          </div>
+          <button class="btn btn-glass btn-launch-round" data-round="round-3" style="margin-top: 0.5rem;">
+            View Round 3
+          </button>
+        </div>
+
+        <!-- Round 4 Card -->
+        <div class="round-showcase-card" data-round="4">
+          <div class="round-card-header">
+            <span class="round-number-pill">Round 4</span>
+            <span style="font-size: 1.5rem;">🎨</span>
+          </div>
+          <div class="round-card-title">Foreign Pictionary</div>
+          <p class="round-card-desc">12 high-energy 60-second drawing rounds across Swedish, Mandarin, and Indonesian word sheets!</p>
+          <div class="round-card-meta">
+            <span>12 Rounds</span>
+            <span>Live Drawing Game</span>
+          </div>
+          <a href="index.html" class="btn btn-glass" style="margin-top: 0.5rem;">
+            Launch Pictionary 🚀
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================================
+         SECTION 2: QUESTION STAGE (ROUND 1 & ROUND 2 PRESENTATION)
+         ========================================================================= -->
+    <section id="quiz-stage-section" class="question-stage-container" style="display: none;">
+      <!-- Progress Bar & Quick Navigation Pills -->
+      <div class="stage-progress-bar-container">
+        <div style="display: flex; align-items: center; gap: 0.75rem;">
+          <span style="font-weight: 800; font-size: 0.95rem;" id="stage-q-number-pill">Question 1 of 8</span>
+          <div class="question-nav-pills" id="question-nav-pills"></div>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 0.5rem;">
+          <button id="btn-toggle-grid" class="btn btn-glass" style="padding: 0.4rem 0.85rem; font-size: 0.85rem;">
+            📋 Show All 8 Questions
+          </button>
+        </div>
+      </div>
+
+      <!-- Main Presentation Card -->
+      <div class="presentation-card">
+        <!-- Badge Header Row -->
+        <div class="question-badge-row">
+          <div class="lang-country-badge" id="stage-lang-badge">
+            <span id="stage-flag" style="font-size: 1.4rem;">🇸🇪</span>
+            <span id="stage-lang-name">Swedish</span>
+          </div>
+
+          <div class="round-category-tag" id="stage-round-tag">
+            🔞 ROUND 1: INNUENDO LINGO
+          </div>
+        </div>
+
+        <!-- Central Foreign Word / Phrase Hero Box -->
+        <div class="prompt-hero-box">
+          <div class="prompt-foreign-text" id="prompt-foreign-text">Loading...</div>
+          <div class="prompt-pronunciation" id="prompt-pronunciation">—</div>
+        </div>
+
+        <!-- Dynamic Content (Context Sentence & 3 Options for R1, Literal Meaning for R2) -->
+        <div id="stage-dynamic-content" style="display: flex; flex-direction: column; gap: 1.25rem;">
+          <!-- Injected dynamically by quiz-ui.js -->
+        </div>
+      </div>
+
+      <!-- Stage Bottom Action Bar -->
+      <div class="stage-control-bar">
+        <div class="stage-control-left">
+          <button id="btn-prev-q" class="btn btn-glass">
+            <span>◀ Previous Question</span>
+          </button>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 0.75rem;">
+          <button id="btn-reveal-answer" class="btn btn-reveal-answer">
+            <span>✨ Reveal Answer</span>
+            <kbd class="kbd-hint">Space</kbd>
+          </button>
+        </div>
+
+        <div class="stage-control-right">
+          <button id="btn-next-q" class="btn btn-primary">
+            <span>Next Question ▶</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================================
+         SECTION 3: ALL QUESTIONS OVERVIEW GRID (ROUND 1 & ROUND 2)
+         ========================================================================= -->
+    <section id="quiz-all-q-section" class="all-questions-section" style="display: none;">
+      <div class="all-questions-header">
+        <div>
+          <h2 id="all-q-grid-title" style="font-size: 1.4rem; font-weight: 800;">Round Questions Overview</h2>
+          <p style="color: var(--text-secondary); font-size: 0.9rem;">Review all 8 questions to finalize your paper answer sheets!</p>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 0.75rem;">
+          <button id="btn-grid-toggle-answers" class="btn btn-glass" style="padding: 0.5rem 1rem;">
+            👁️ Show Answer Keys
+          </button>
+          <button id="btn-grid-back-to-single" class="btn btn-primary" style="padding: 0.5rem 1rem;">
+            ◀ Back to Single Question
+          </button>
+        </div>
+      </div>
+
+      <div class="all-q-grid" id="all-q-grid-container">
+        <!-- Injected dynamically -->
+      </div>
+    </section>
+
+    <!-- =========================================================================
+         SECTION 4: ROUND 3 PREVIEW (GUESSTINATION UNKNOWN)
+         ========================================================================= -->
+    <section id="quiz-round3-section" class="glass-panel" style="display: none; padding: 2.5rem; flex-direction: column; gap: 1.5rem; text-align: center; align-items: center;">
+      <span style="font-size: 3.5rem;">🌍</span>
+      <h2 style="font-size: 2.4rem; font-weight: 900; background: linear-gradient(135deg, #60a5fa, #a78bfa); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+        Round 3: Guesstination Unknown
+      </h2>
+      <p style="font-size: 1.2rem; color: var(--text-secondary); max-width: 650px;">
+        6 rounds of international mystery detective work. Clues will be presented by the host, and teams write the mystery country on their answer sheets.
+      </p>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.25rem; width: 100%; max-width: 800px; margin-top: 1rem;">
+        <div style="background: rgba(255, 255, 255, 0.05); padding: 1.25rem; border-radius: var(--radius-md); border: 1px solid var(--surface-glass-border);">
+          <div style="font-size: 1.8rem; margin-bottom: 0.5rem;">🕵️‍♂️</div>
+          <strong>6 Rounds</strong>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.3rem;">Progressive clues per country</p>
+        </div>
+        <div style="background: rgba(255, 255, 255, 0.05); padding: 1.25rem; border-radius: var(--radius-md); border: 1px solid var(--surface-glass-border);">
+          <div style="font-size: 1.8rem; margin-bottom: 0.5rem;">📝</div>
+          <strong>Written Format</strong>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.3rem;">Write the exact country name</p>
+        </div>
+        <div style="background: rgba(255, 255, 255, 0.05); padding: 1.25rem; border-radius: var(--radius-md); border: 1px solid var(--surface-glass-border);">
+          <div style="font-size: 1.8rem; margin-bottom: 0.5rem;">⭐</div>
+          <strong>6 Points Total</strong>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.3rem;">1 point per correct country</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================================
+         SECTION 5: ROUND 4 PREVIEW / LAUNCHER (FOREIGN PICTIONARY)
+         ========================================================================= -->
+    <section id="quiz-round4-section" class="glass-panel" style="display: none; padding: 2.5rem; flex-direction: column; gap: 1.5rem; text-align: center; align-items: center;">
+      <span style="font-size: 3.5rem;">🎨</span>
+      <h2 style="font-size: 2.4rem; font-weight: 900; background: linear-gradient(135deg, #f97316, #ef4444); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+        Round 4: Foreign Pictionary
+      </h2>
+      <p style="font-size: 1.2rem; color: var(--text-secondary); max-width: 650px;">
+        12 rounds of high-intensity drawing! The drawer sees the host screen prompt, while the guesser hunts through their 100-word foreign language sheet to shout the translation.
+      </p>
+
+      <div style="display: flex; gap: 1.5rem; flex-wrap: wrap; justify-content: center; margin-top: 0.5rem;">
+        <div class="badge" style="background: rgba(0, 106, 167, 0.25); border-color: #006aa7; font-size: 1rem; padding: 0.6rem 1.2rem;">
+          <span>🇸🇪 Rounds 1-4: Swedish</span>
+        </div>
+        <div class="badge" style="background: rgba(222, 41, 16, 0.25); border-color: #de2910; font-size: 1rem; padding: 0.6rem 1.2rem;">
+          <span>🇨🇳 Rounds 5-8: Mandarin</span>
+        </div>
+        <div class="badge" style="background: rgba(217, 28, 43, 0.25); border-color: #d91c2b; font-size: 1rem; padding: 0.6rem 1.2rem;">
+          <span>🇮🇩 Rounds 9-12: Indonesian</span>
+        </div>
+      </div>
+
+      <div style="display: flex; gap: 1rem; margin-top: 1rem; flex-wrap: wrap; justify-content: center;">
+        <a href="index.html" class="btn btn-primary" style="padding: 0.85rem 2rem; font-size: 1.1rem;">
+          🚀 Open Pictionary Host Screen
+        </a>
+        <a href="display.html" target="_blank" class="btn btn-glass" style="padding: 0.85rem 2rem; font-size: 1.1rem;">
+          📺 Open Crowd Screen (New Window)
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <!-- =========================================================================
+       MODAL 1: TEAM SCORES & LEADERBOARD
+       ========================================================================= -->
+  <div class="modal-overlay" id="scores-modal">
+    <div class="modal-container" style="max-width: 850px;">
+      <div class="modal-header">
+        <h3 style="font-weight: 800; font-size: 1.3rem; display: flex; align-items: center; gap: 0.5rem;">
+          <span>📊</span> Team Scoreboard & Standings
+        </h3>
+        <button id="btn-close-scores" class="btn btn-glass" style="padding: 0.3rem 0.7rem;">✕</button>
+      </div>
+
+      <div class="modal-body">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+          <p style="color: var(--text-secondary); font-size: 0.9rem;">
+            Track scores across all 4 rounds. Scores automatically save locally.
+          </p>
+          <button id="btn-add-team" class="btn btn-primary" style="padding: 0.45rem 0.9rem; font-size: 0.85rem;">
+            ➕ Add Team
+          </button>
+        </div>
+
+        <table class="teams-table">
+          <thead>
+            <tr>
+              <th style="width: 40px;">Rank</th>
+              <th>Team Name</th>
+              <th>Players (2)</th>
+              <th title="Innuendo Lingo (Max 8)">R1 (8)</th>
+              <th title="Phunny Phrases (Max 8)">R2 (8)</th>
+              <th title="Guesstination (Max 6)">R3 (6)</th>
+              <th title="Foreign Pictionary">R4 (Pic)</th>
+              <th>Total</th>
+              <th style="width: 40px;"></th>
+            </tr>
+          </thead>
+          <tbody id="teams-table-body">
+            <!-- Dynamic rows -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       MODAL 2: HOST ANSWER KEY & SHEET
+       ========================================================================= -->
+  <div class="modal-overlay" id="answer-key-modal">
+    <div class="modal-container" style="max-width: 900px; max-height: 90vh;">
+      <div class="modal-header">
+        <h3 style="font-weight: 800; font-size: 1.3rem; display: flex; align-items: center; gap: 0.5rem;">
+          <span>🔑</span> Master Answer Key (Host Reference)
+        </h3>
+        <button id="btn-close-answer-key" class="btn btn-glass" style="padding: 0.3rem 0.7rem;">✕</button>
+      </div>
+
+      <div class="modal-body" id="answer-key-content">
+        <!-- Dynamic Answer Table -->
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="src/js/quiz-ui.js"></script>
+</body>
+</html>
