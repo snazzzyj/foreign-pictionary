@@ -1,0 +1,301 @@
+/* Crowd, Guesser & Spectator View Styles */
+
+.display-body {
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: #060911;
+  background-image: 
+    radial-gradient(circle at 50% 20%, rgba(23, 32, 51, 0.9) 0%, #060911 80%),
+    radial-gradient(circle at 10% 90%, var(--current-glow) 0%, transparent 40%),
+    radial-gradient(circle at 90% 90%, var(--current-glow) 0%, transparent 40%);
+  user-select: none;
+}
+
+/* Header Info on Crowd Screen */
+.crowd-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem 3rem;
+  z-index: 10;
+}
+
+.crowd-brand {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.crowd-title {
+  font-size: 1.8rem;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, #ffffff 40%, #94a3b8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.crowd-language-badge {
+  font-size: 1.35rem;
+  padding: 0.6rem 1.4rem;
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1.5px solid var(--surface-glass-border);
+  box-shadow: 0 4px 20px var(--current-glow);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-weight: 800;
+}
+
+.crowd-round-pill {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--text-secondary);
+  background: var(--surface-card);
+  border: 1px solid var(--surface-glass-border);
+  padding: 0.6rem 1.4rem;
+  border-radius: var(--radius-full);
+}
+
+/* Main Display Center Stage */
+.crowd-stage {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5rem;
+  padding: 1rem 3rem;
+  position: relative;
+}
+
+/* Timer Radial Widget */
+.timer-radial-container {
+  position: relative;
+  width: 380px;
+  height: 380px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.timer-svg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.timer-circle-bg {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.07);
+  stroke-width: 14;
+}
+
+.timer-circle-progress {
+  fill: none;
+  stroke: var(--current-primary);
+  stroke-width: 14;
+  stroke-linecap: round;
+  stroke-dasharray: 880;
+  stroke-dashoffset: 0;
+  transition: stroke-dashoffset 0.25s linear, stroke 0.3s ease;
+  filter: drop-shadow(0 0 16px var(--current-glow));
+}
+
+.timer-circle-progress.warning {
+  stroke: var(--color-warning);
+  filter: drop-shadow(0 0 20px var(--color-warning-glow));
+}
+
+.timer-circle-progress.danger {
+  stroke: var(--color-danger);
+  filter: drop-shadow(0 0 26px var(--color-danger-glow));
+  animation: timerDangerPulse 0.6s infinite alternate;
+}
+
+@keyframes timerDangerPulse {
+  0% {
+    stroke-width: 14;
+    filter: drop-shadow(0 0 15px var(--color-danger-glow));
+  }
+  100% {
+    stroke-width: 18;
+    filter: drop-shadow(0 0 35px var(--color-danger-glow));
+  }
+}
+
+.timer-content-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.timer-digits {
+  font-size: 7.5rem;
+  font-weight: 900;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.04em;
+  color: #ffffff;
+  text-shadow: 0 0 40px rgba(255, 255, 255, 0.3);
+}
+
+.timer-digits.warning {
+  color: #fbbf24;
+  text-shadow: 0 0 40px var(--color-warning-glow);
+}
+
+.timer-digits.danger {
+  color: #f87171;
+  text-shadow: 0 0 50px var(--color-danger-glow);
+  animation: dangerShake 0.4s infinite ease-in-out;
+}
+
+@keyframes dangerShake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-3px); }
+  75% { transform: translateX(3px); }
+}
+
+.timer-subtext {
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-top: 0.5rem;
+}
+
+/* Massive Score Card Widget */
+.crowd-score-card {
+  background: var(--surface-card);
+  border: 2px solid var(--surface-glass-border);
+  border-radius: var(--radius-lg);
+  padding: 3rem 4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 320px;
+  box-shadow: var(--shadow-lg), 0 0 40px rgba(0, 0, 0, 0.5);
+  position: relative;
+  overflow: hidden;
+}
+
+.score-title {
+  font-size: 1.25rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--text-muted);
+}
+
+.score-number {
+  font-size: 8.5rem;
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -0.05em;
+  color: var(--color-success);
+  text-shadow: 0 0 50px var(--color-success-glow);
+  margin: 0.75rem 0;
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.score-number.bump {
+  transform: scale(1.3);
+  color: #34d399;
+}
+
+.score-sublabel {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+/* Floating Celebration Effect */
+.score-burst-container {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.burst-text {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 3rem;
+  font-weight: 900;
+  color: #10b981;
+  text-shadow: 0 0 30px #10b981;
+  animation: floatUpFade 1.2s ease-out forwards;
+}
+
+/* Footer Status Banner */
+.crowd-footer {
+  padding: 1.5rem 3rem 2.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.status-ribbon {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--surface-glass-border);
+  padding: 0.85rem 2.5rem;
+  border-radius: var(--radius-full);
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  box-shadow: var(--shadow-md);
+}
+
+.status-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--current-primary);
+  box-shadow: 0 0 10px var(--current-primary);
+}
+
+.status-dot.active {
+  animation: dotPulse 1s infinite alternate;
+}
+
+@keyframes dotPulse {
+  0% { transform: scale(0.9); opacity: 0.7; }
+  100% { transform: scale(1.4); opacity: 1; }
+}
+
+@media (max-width: 900px) {
+  .crowd-stage {
+    flex-direction: column;
+    gap: 2rem;
+  }
+  .timer-radial-container {
+    width: 260px;
+    height: 260px;
+  }
+  .timer-digits {
+    font-size: 5rem;
+  }
+  .score-number {
+    font-size: 6rem;
+  }
+  .crowd-score-card {
+    padding: 2rem;
+  }
+}

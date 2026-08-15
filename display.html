@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="swedish">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Foreigner Pictionary — Crowd Display</title>
+  <link rel="stylesheet" href="src/css/main.css">
+  <link rel="stylesheet" href="src/css/display.css">
+</head>
+<body class="display-body">
+  <!-- Top Crowd Bar -->
+  <header class="crowd-header">
+    <div class="crowd-brand">
+      <span style="font-size: 2.4rem;">🎨</span>
+      <div>
+        <h1 class="crowd-title">Foreigner Pictionary</h1>
+      </div>
+    </div>
+
+    <div style="display: flex; align-items: center; gap: 1.25rem;">
+      <!-- Dynamic Language Theme Badge -->
+      <div class="crowd-language-badge" id="crowd-lang-badge">
+        <span>🇸🇪</span>
+        <span>Swedish</span>
+      </div>
+
+      <!-- Current Round Number Pill -->
+      <div class="crowd-round-pill" id="crowd-round-pill">
+        Round 1 of 12
+      </div>
+
+      <!-- Fullscreen Button -->
+      <button id="btn-fullscreen" class="btn btn-glass" title="Toggle Fullscreen (F)">
+        ⛶ Fullscreen
+      </button>
+    </div>
+  </header>
+
+  <!-- Center Stage: Giant Countdown Timer & Scoreboard -->
+  <main class="crowd-stage">
+    <!-- Giant Radial Countdown Timer -->
+    <div class="timer-radial-container">
+      <svg class="timer-svg" viewBox="0 0 320 320">
+        <!-- Background Track -->
+        <circle class="timer-circle-bg" cx="160" cy="160" r="140"></circle>
+        <!-- Animated Progress Circle -->
+        <circle id="timer-circle-progress" class="timer-circle-progress" cx="160" cy="160" r="140"></circle>
+      </svg>
+
+      <!-- Center Number Overlay -->
+      <div class="timer-content-overlay">
+        <div class="timer-digits" id="crowd-timer-digits">60</div>
+        <div class="timer-subtext">Seconds Remaining</div>
+      </div>
+    </div>
+
+    <!-- Massive Score Card Widget -->
+    <div class="crowd-score-card">
+      <div class="score-title">Round Score</div>
+      <div class="score-number" id="crowd-score-number">0</div>
+      <div class="score-sublabel">Correct Foreign Words</div>
+
+      <!-- Floating Burst Particle Container for Score Celebrations -->
+      <div class="score-burst-container" id="score-burst-container"></div>
+    </div>
+  </main>
+
+  <!-- Footer Live Status Ribbon -->
+  <footer class="crowd-footer">
+    <div class="status-ribbon" id="crowd-status-text">
+      <span class="status-dot"></span>
+      <span>🎯 Ready for Round Start</span>
+    </div>
+  </footer>
+
+  <script type="module" src="src/js/display-ui.js"></script>
+</body>
+</html>
