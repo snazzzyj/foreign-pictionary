@@ -7,6 +7,30 @@
 import { GAMES_NIGHT_INFO, QUIZ_QUESTIONS } from '../data/quiz-data.js';
 import { SoundFX } from './sound.js';
 
+// Language codes mapping for browser Web Speech Synthesis
+const LANG_SPEECH_CODES = {
+  'Swedish': 'sv-SE',
+  'Mandarin': 'zh-CN',
+  'Japanese': 'ja-JP',
+  'Turkish': 'tr-TR',
+  'Dutch': 'nl-NL',
+  'Finnish': 'fi-FI',
+  'Russian': 'ru-RU',
+  'Hindi': 'hi-IN',
+  'Italian': 'it-IT',
+  'Spanish': 'es-ES',
+  'German': 'de-DE',
+  'Danish': 'da-DK',
+  'French': 'fr-FR',
+  'Portuguese': 'pt-BR',
+  'Korean': 'ko-KR',
+  'Indonesian': 'id-ID',
+  'Polish': 'pl-PL',
+  'Hungarian': 'hu-HU',
+  'Greek': 'el-GR',
+  'Arabic': 'ar-SA'
+};
+
 class QuizApp {
   constructor() {
     this.sound = new SoundFX();
@@ -38,6 +62,7 @@ class QuizApp {
       navPillsContainer: document.getElementById('question-nav-pills'),
       promptForeignText: document.getElementById('prompt-foreign-text'),
       promptPronunciation: document.getElementById('prompt-pronunciation'),
+      btnSpeakStage: document.getElementById('btn-speak-stage'),
       stageDynamicContent: document.getElementById('stage-dynamic-content'),
 
       // Controls
@@ -70,6 +95,13 @@ class QuizApp {
   }
 
   init() {
+    // Warm up speech synthesis voices
+    if ('speechSynthesis' in window) {
+      window.speechSynthesis.getVoices();
+      if (window.speechSynthesis.onvoiceschanged !== undefined) {
+        window.speechSynthesis.onvoiceschanged = () => window.speechSynthesis.getVoices();
+      }
+    }
     this.bindEvents();
     this.renderActiveTab();
     this.renderTeamsTable();
@@ -147,6 +179,9 @@ class QuizApp {
     });
     this.dom.btnCloseAnswerKey.addEventListener('click', () => this.dom.answerKeyModal.classList.remove('active'));
 
+    // Speech Pronunciation button on Stage
+    this.dom.btnSpeakStage?.addEventListener('click', () => this.speakCurrentQuestion());
+
     // Global Keyboard Shortcuts
     window.addEventListener('keydown', (e) => {
       // Don't trigger shortcuts if user is typing in an input
@@ -166,6 +201,8 @@ class QuizApp {
       } else if (e.key.toLowerCase() === 'm') {
         const isMuted = this.sound.toggleMute();
         this.dom.btnMute.innerHTML = isMuted ? '🔇 Muted' : '🔊 Sound FX';
+      } else if (e.key.toLowerCase() === 'p' || e.key.toLowerCase() === 'l') {
+        this.speakCurrentQuestion();
       } else if (e.key >= '1' && e.key <= '8') {
         const qNum = parseInt(e.key, 10) - 1;
         this.goToQuestion(qNum);
@@ -422,6 +459,107 @@ class QuizApp {
     this.renderActiveTab();
   }
 
+  cleanSpeechText(rawText) {
+    if (!rawText) return '';
+    // Strip parenthetical English transliterations e.g. "좆 좀 드세요 (Joj jom deuseyo)" -> "좆 좀 드세요"
+    return rawText.replace(/\s*\([a-zA-Z0-9\s\-',.]+\)/g, '').trim();
+  }
+
+  getBestVoice(targetLocale) {
+    if (!('speechSynthesis' in window)) return null;
+    const voices = window.speechSynthesis.getVoices();
+    if (!voices || voices.length === 0) return null;
+
+    const targetLang = targetLocale.toLowerCase().replace('_', '-');
+    const langPrefix = targetLang.split('-')[0];
+
+    // Filter voices matching exact locale or language prefix
+    const matchingVoices = voices.filter(v => {
+      const vLang = v.lang.toLowerCase().replace('_', '-');
+      return vLang === targetLang || vLang.startsWith(langPrefix);
+    });
+
+    if (matchingVoices.length === 0) return null;
+
+    // Score voices: prioritize Google, Enhanced, Premium, Natural, exact locale; deprioritize robotic Compact voices
+    matchingVoices.sort((a, b) => {
+      const scoreVoice = (v) => {
+        let score = 0;
+        const vLang = v.lang.toLowerCase().replace('_', '-');
+        if (vLang === targetLang) score += 10;
+        const name = v.name.toLowerCase();
+        if (name.includes('google')) score += 25;
+        if (name.includes('enhanced') || name.includes('premium') || name.includes('natural')) score += 20;
+        if (name.includes('compact')) score -= 25;
+        if (v.default) score += 2;
+        return score;
+      };
+      return scoreVoice(b) - scoreVoice(a);
+    });
+
+    return matchingVoices[0];
+  }
+
+  speakWithSpeechSynthesis(rawText, language, buttonEl = null) {
+    if (!('speechSynthesis' in window)) {
+      console.warn('Speech synthesis not supported in this browser.');
+      return;
+    }
+
+    const textToSpeak = this.cleanSpeechText(rawText);
+    if (!textToSpeak) return;
+
+    window.speechSynthesis.cancel(); // Stop previous utterance immediately
+
+    const targetLocale = LANG_SPEECH_CODES[language] || 'en-US';
+    const utterance = new SpeechSynthesisUtterance(textToSpeak);
+    utterance.lang = targetLocale;
+    // Pacing: 0.95 gives natural, fluent rhythm (0.85 can distort glottal stops / vowels in Danish and Swedish)
+    utterance.rate = 0.95;
+
+    if (buttonEl) {
+      buttonEl.classList.add('playing');
+      const resetBtn = () => buttonEl.classList.remove('playing');
+      utterance.onend = resetBtn;
+      utterance.onerror = resetBtn;
+    }
+
+    // Select the best quality voice (Google/Enhanced/Natural)
+    const bestVoice = this.getBestVoice(targetLocale);
+    if (bestVoice) {
+      utterance.voice = bestVoice;
+    }
+
+    window.speechSynthesis.speak(utterance);
+  }
+
+  speakWord(rawText, language, buttonEl = null, audioUrl = null) {
+    if (audioUrl) {
+      if (buttonEl) buttonEl.classList.add('playing');
+      const audio = new Audio(audioUrl);
+      const resetBtn = () => { if (buttonEl) buttonEl.classList.remove('playing'); };
+      audio.onended = resetBtn;
+      audio.onerror = () => {
+        resetBtn();
+        this.speakWithSpeechSynthesis(rawText, language, buttonEl);
+      };
+      audio.play().catch(() => {
+        resetBtn();
+        this.speakWithSpeechSynthesis(rawText, language, buttonEl);
+      });
+      return;
+    }
+
+    this.speakWithSpeechSynthesis(rawText, language, buttonEl);
+  }
+
+  speakCurrentQuestion() {
+    const q = this.getCurrentQuestion();
+    if (!q) return;
+    const text = q.word || q.phrase;
+    this.speakWord(text, q.language, this.dom.btnSpeakStage, q.audioUrl || q.audio);
+  }
+
   renderAllQuestionsGrid() {
     const questions = this.getCurrentQuestionsList();
     this.dom.allQGridTitle.textContent = `${this.currentTab === 'round-1' ? '🔞 Round 1: Innuendo Lingo' : '🤪 Round 2: Phunny Phrases'} — All 8 Questions Overview`;
@@ -430,6 +568,7 @@ class QuizApp {
     questions.forEach(q => {
       const card = document.createElement('div');
       card.className = 'all-q-card';
+      const wordText = q.word || q.phrase;
 
       if (this.currentTab === 'round-1') {
         const correctOpt = q.options.find(o => o.isCorrect);
@@ -448,7 +587,10 @@ class QuizApp {
             <span>${q.flag} ${q.language}</span>
             <span class="round-number-pill">Q#${q.number}</span>
           </div>
-          <div class="all-q-word">${q.word}</div>
+          <div class="all-q-word">
+            <span>${q.word}</span>
+            <button class="btn-speak-inline" data-lang="${q.language}" data-text="${q.word}" title="Pronounce (Web Speech)">🔊</button>
+          </div>
           <div style="font-size: 0.85rem; color: #93c5fd;">${q.pronunciation}</div>
           <div style="font-size: 0.9rem; color: #fde68a; font-style: italic;">"${q.sentence}"</div>
           <div class="all-q-options">${optionsHtml}</div>
@@ -460,7 +602,10 @@ class QuizApp {
             <span>${q.flag} ${q.language}</span>
             <span class="round-number-pill">Q#${q.number}</span>
           </div>
-          <div class="all-q-word">${q.phrase}</div>
+          <div class="all-q-word">
+            <span>${q.phrase}</span>
+            <button class="btn-speak-inline" data-lang="${q.language}" data-text="${q.phrase}" title="Pronounce (Web Speech)">🔊</button>
+          </div>
           <div style="font-size: 0.85rem; color: #93c5fd;">${q.pronunciation}</div>
           <div style="background: rgba(16, 185, 129, 0.1); padding: 0.5rem 0.75rem; border-radius: 6px; font-size: 0.9rem;">
             <strong style="color: #34d399;">Literal:</strong> "${q.literalMeaning}"
@@ -476,6 +621,17 @@ class QuizApp {
             </div>
           `}
         `;
+      }
+
+      // Bind speak button inside this card
+      const speakBtn = card.querySelector('.btn-speak-inline');
+      if (speakBtn) {
+        speakBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const lang = speakBtn.dataset.lang;
+          const text = speakBtn.dataset.text;
+          this.speakWord(text, lang, speakBtn, q.audioUrl || q.audio);
+        });
       }
 
       this.dom.allQGridContainer.appendChild(card);

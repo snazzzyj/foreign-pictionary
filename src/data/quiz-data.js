@@ -263,7 +263,7 @@ export const QUIZ_QUESTIONS = {
       number: 7,
       language: "Korean",
       flag: "🇰🇷",
-      phrase: "좆 좀 드세요 (Joj jom deuseyo)",
+      phrase: "좆 좀 드세요",
       pronunciation: "[joj jom deu-seh-yo]",
       literalMeaning: "Please eat some dick",
       actualMeaning: "Fuck off / Get lost",
