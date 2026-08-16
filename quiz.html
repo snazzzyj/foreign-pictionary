@@ -67,67 +67,107 @@
     </div>
 
     <!-- =========================================================================
-         SECTION 1: INTRO & GAMES NIGHT OVERVIEW
+         SECTION 1: INTRO & DUOLINGO-STYLE LEVELS MAP
          ========================================================================= -->
-    <section id="quiz-intro-section" class="intro-hero" style="display: flex;">
-      <h2 class="intro-title">Let's Lingo!</h2>
-
-      <div class="rounds-grid-showcase">
-        <!-- Round 1 Card -->
-        <div class="round-showcase-card" data-round="1">
-          <div class="round-card-header">
-            <span class="round-number-pill">Round 1</span>
-          </div>
-          <div class="round-card-title">Innuendo Lingo</div>
-          <p class="round-card-desc">Foreign words that sound interesting in English...</p>
-          <div class="round-card-meta">
-          </div>
-          <button class="btn btn-primary btn-launch-round" data-round="round-1" style="margin-top: 0.5rem;">
-            Start Round 1
-          </button>
+    <section id="quiz-intro-section" class="duo-intro-section" style="display: flex;">
+      <!-- Duolingo Unit Header Banner -->
+      <div class="duo-unit-banner">
+        <div class="duo-unit-info">
+          <div class="duo-unit-tag">SECTION 1, UNIT 1</div>
+          <h2 class="duo-unit-title">Let's Lingo!</h2>
+          <p class="duo-unit-desc">Essential lingo that will get you far in life.</p>
         </div>
+      </div>
 
-        <!-- Round 2 Card -->
-        <div class="round-showcase-card" data-round="2">
-          <div class="round-card-header">
-            <span class="round-number-pill">Round 2</span>
-          </div>
-          <div class="round-card-title">Phunny Phrases</div>
-          <p class="round-card-desc">Quirky idioms with interesting meanings...</p>
-          <div class="round-card-meta">
-          </div>
-          <button class="btn btn-primary btn-launch-round" data-round="round-2" style="margin-top: 0.5rem;">
-            Start Round 2
-          </button>
-        </div>
+      <!-- Duolingo Levels Path Container -->
+      <div class="duo-path-wrapper">
+        <!-- SVG Curved Connection Track Line -->
+        <svg class="duo-track-svg" viewBox="0 0 400 780" preserveAspectRatio="none">
+          <path class="duo-track-bg"
+            d="M 200 60 Q 110 130 130 210 Q 150 290 200 370 Q 250 450 270 530 Q 290 610 200 690" />
+          <path class="duo-track-line"
+            d="M 200 60 Q 110 130 130 210 Q 150 290 200 370 Q 250 450 270 530 Q 290 610 200 690" />
+        </svg>
 
-        <!-- Round 3 Card -->
-        <div class="round-showcase-card" data-round="3">
-          <div class="round-card-header">
-            <span class="round-number-pill">Round 3</span>
+        <div class="duo-levels-path">
+          <!-- Level 1: Innuendo Lingo -->
+          <div class="duo-node-row pos-center" style="--node-offset: 0px;">
+            <div class="duo-callout-bubble">
+              <span>START</span>
+              <div class="duo-callout-arrow"></div>
+            </div>
+            <button class="duo-level-btn btn-launch-round duo-color-green" data-round="round-1"
+              title="Start Round 1: Innuendo Lingo">
+              <div class="duo-btn-inner">
+                <span class="duo-level-icon">🔞</span>
+              </div>
+            </button>
+            <div class="duo-level-label">
+              <strong>Round 1</strong>
+              <span>Innuendo Lingo</span>
+            </div>
           </div>
-          <div class="round-card-title">Guesstination Unknown</div>
-          <p class="round-card-desc">Find yourself in the middle of nowhere!
-          </p>
-          <div class="round-card-meta">
-          </div>
-          <a href="https://openguessr.com/" target="_blank" class="btn btn-primary" style="margin-top: 0.5rem;">
-            Launch GeoGuessr
-          </a>
-        </div>
 
-        <!-- Round 4 Card -->
-        <div class="round-showcase-card" data-round="4">
-          <div class="round-card-header">
-            <span class="round-number-pill">Round 4</span>
+          <!-- Level 2: Phunny Phrases -->
+          <div class="duo-node-row pos-left" style="--node-offset: -75px;">
+            <button class="duo-level-btn btn-launch-round duo-color-green" data-round="round-2"
+              title="Start Round 2: Phunny Phrases">
+              <div class="duo-btn-inner">
+                <span class="duo-level-icon">💬</span>
+              </div>
+            </button>
+            <div class="duo-level-label">
+              <strong>Round 2</strong>
+              <span>Phunny Phrases</span>
+            </div>
           </div>
-          <div class="round-card-title">Foreign Pictionary</div>
-          <p class="round-card-desc">See if your Drawing skills are a universal language!</p>
-          <div class="round-card-meta">
+
+          <!-- Level 3: Guesstination Unknown -->
+          <div class="duo-node-row pos-center" style="--node-offset: 0px;">
+            <button class="duo-level-btn btn-launch-round duo-color-green" data-round="round-3"
+              title="Start Round 3: Guesstination Unknown">
+              <div class="duo-btn-inner">
+                <span class="duo-level-icon">🌍</span>
+              </div>
+            </button>
+            <div class="duo-level-label">
+              <strong>Round 3</strong>
+              <span>Guesstination</span>
+            </div>
           </div>
-          <a href="index.html" class="btn btn-primary" style="margin-top: 0.5rem;">
-            Launch Pictionary
-          </a>
+
+          <!-- Level 4: Foreign Pictionary -->
+          <div class="duo-node-row pos-right" style="--node-offset: 75px;">
+            <button class="duo-level-btn btn-launch-round duo-color-green" data-round="round-4"
+              title="Start Round 4: Foreign Pictionary">
+              <div class="duo-btn-inner">
+                <span class="duo-level-icon">🎨</span>
+              </div>
+            </button>
+            <div class="duo-level-label">
+              <strong>Round 4</strong>
+              <span>Pictionary</span>
+            </div>
+          </div>
+
+          <!-- Final Node: Duolingo Treasure Chest (Winner Reveal) -->
+          <div class="duo-node-row pos-center duo-chest-node-row" style="--node-offset: 0px;">
+            <button id="btn-treasure-chest" class="duo-chest-btn" title="Open Chest to Reveal Winner!">
+              <div class="duo-chest-box">
+                <div class="duo-chest-lid">
+                  <div class="chest-lock"></div>
+                </div>
+                <div class="duo-chest-base">
+                  <div class="chest-keyhole"></div>
+                </div>
+              </div>
+              <div class="duo-chest-glow"></div>
+            </button>
+            <div class="duo-level-label chest-label">
+              <strong>Grand Finale</strong>
+              <span>Reveal Winner</span>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -158,7 +198,8 @@
             <span id="stage-flag" style="font-size: 1.4rem;">🇸🇪</span>
             <span id="stage-lang-name">Swedish</span>
           </div>
-          <button id="btn-speak-stage" class="btn-speak" title="Listen to native pronunciation (Press P)" aria-label="Listen to pronunciation">
+          <button id="btn-speak-stage" class="btn-speak" title="Listen to native pronunciation (Press P)"
+            aria-label="Listen to pronunciation">
             <span class="speak-icon">🔊</span>
             <span class="speak-label">Listen</span>
           </button>
@@ -326,6 +367,37 @@
 
       <div class="modal-body" id="answer-key-content">
         <!-- Dynamic Answer Table -->
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       MODAL 3: WINNER CELEBRATION MODAL (DUOLINGO TREASURE CHEST REVEAL)
+       ========================================================================= -->
+  <div class="modal-overlay duo-winner-modal-overlay" id="winner-modal">
+    <canvas id="confetti-canvas" class="confetti-canvas"></canvas>
+    <div class="modal-container duo-winner-container">
+      <button id="btn-close-winner" class="btn-winner-close" title="Close">✕</button>
+
+      <div class="duo-winner-header">
+        <div class="duo-winner-chest-graphic">
+          <div class="chest-celebration-burst"></div>
+          <span class="winner-trophy-emoji">🏆</span>
+        </div>
+        <div class="duo-winner-badge">LINGO CHAMPIONS</div>
+      </div>
+
+      <div class="duo-winner-body" id="winner-modal-content">
+        <!-- Dynamically injected winner team & leaderboard details -->
+      </div>
+
+      <div class="duo-winner-footer">
+        <button id="btn-winner-scoreboard" class="btn btn-primary duo-3d-btn" style="background: var(--color-green);">
+          📊 Open Full Scoreboard
+        </button>
+        <button id="btn-winner-confetti-replay" class="btn btn-glass duo-3d-btn-glass">
+          🎉 More Confetti!
+        </button>
       </div>
     </div>
   </div>

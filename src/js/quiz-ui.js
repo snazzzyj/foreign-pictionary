@@ -84,12 +84,25 @@ class QuizApp {
       btnCloseAnswerKey: document.getElementById('btn-close-answer-key'),
       answerKeyContent: document.getElementById('answer-key-content'),
 
+      // Winner Celebration Modal & Intro Duolingo Elements
+      btnTreasureChest: document.getElementById('btn-treasure-chest'),
+      winnerModal: document.getElementById('winner-modal'),
+      btnCloseWinner: document.getElementById('btn-close-winner'),
+      winnerModalContent: document.getElementById('winner-modal-content'),
+      btnWinnerScoreboard: document.getElementById('btn-winner-scoreboard'),
+      btnWinnerConfettiReplay: document.getElementById('btn-winner-confetti-replay'),
+      confettiCanvas: document.getElementById('confetti-canvas'),
+      btnIntroScoresShortcut: document.getElementById('btn-intro-scores-shortcut'),
+
       // Grid view
       allQGridTitle: document.getElementById('all-q-grid-title'),
       allQGridContainer: document.getElementById('all-q-grid-container'),
       btnGridBackToSingle: document.getElementById('btn-grid-back-to-single'),
       btnGridToggleAnswers: document.getElementById('btn-grid-toggle-answers')
     };
+
+    this.confettiAnimationId = null;
+    this.confettiParticles = [];
 
     this.init();
   }
@@ -209,14 +222,40 @@ class QuizApp {
       } else if (e.key === 'Escape') {
         this.dom.scoresModal.classList.remove('active');
         this.dom.answerKeyModal.classList.remove('active');
+        this.closeWinnerModal();
       }
     });
 
     // Modal background click to close
-    [this.dom.scoresModal, this.dom.answerKeyModal].forEach(modal => {
+    [this.dom.scoresModal, this.dom.answerKeyModal, this.dom.winnerModal].forEach(modal => {
+      if (!modal) return;
       modal.addEventListener('click', (e) => {
-        if (e.target === modal) modal.classList.remove('active');
+        if (e.target === modal) {
+          modal.classList.remove('active');
+          if (modal === this.dom.winnerModal) {
+            this.closeWinnerModal();
+          }
+        }
       });
+    });
+
+    // Treasure chest winner reveal click
+    this.dom.btnTreasureChest?.addEventListener('click', () => this.revealWinner());
+    this.dom.btnCloseWinner?.addEventListener('click', () => this.closeWinnerModal());
+    this.dom.btnWinnerScoreboard?.addEventListener('click', () => {
+      this.closeWinnerModal();
+      this.renderTeamsTable();
+      this.dom.scoresModal.classList.add('active');
+    });
+    this.dom.btnWinnerConfettiReplay?.addEventListener('click', () => {
+      this.sound.playVictoryFanfare();
+      this.launchConfetti();
+    });
+
+    // Shortcut button on Duolingo unit banner to open scoreboard
+    this.dom.btnIntroScoresShortcut?.addEventListener('click', () => {
+      this.renderTeamsTable();
+      this.dom.scoresModal.classList.add('active');
     });
 
     // Interactive round showcase buttons on intro screen
@@ -782,6 +821,241 @@ class QuizApp {
         this.dom.btnFullscreen.textContent = '⛶ Fullscreen';
       }
     }
+  }
+
+  /* --------------------------------------------------------------------------
+     Duolingo Winner Reveal & Confetti Engine
+     -------------------------------------------------------------------------- */
+  calculateStandings() {
+    // Reload fresh data from localStorage
+    this.teams = this.loadTeams();
+
+    const standings = this.teams.map(team => {
+      const r1 = Number(team.r1) || 0;
+      const r2 = Number(team.r2) || 0;
+      const r3 = Number(team.r3) || 0;
+      const r4 = Number(team.r4) || 0;
+      const total = r1 + r2 + r3 + r4;
+      return {
+        ...team,
+        r1,
+        r2,
+        r3,
+        r4,
+        total
+      };
+    });
+
+    // Sort descending by total score
+    standings.sort((a, b) => b.total - a.total);
+    return standings;
+  }
+
+  revealWinner() {
+    const standings = this.calculateStandings();
+
+    // Sound fanfare
+    this.sound.playVictoryFanfare();
+
+    if (!standings || standings.length === 0) {
+      this.dom.winnerModalContent.innerHTML = `
+        <div class="duo-winner-champion-card">
+          <div class="champion-team-name">No Teams Registered</div>
+          <p class="champion-players">Add teams and enter scores via the Team Scoreboard first!</p>
+        </div>
+      `;
+    } else {
+      const topScore = standings[0].total;
+      const winners = standings.filter(t => t.total === topScore && topScore > 0);
+      const isTie = winners.length > 1;
+
+      let html = '';
+
+      if (topScore === 0) {
+        // All scores are 0
+        html += `
+          <div class="duo-winner-champion-card">
+            <div class="champion-rank-pill">Scores Pending</div>
+            <div class="champion-team-name">Ready for the Grand Finale?</div>
+            <p class="champion-players">Scores are currently at 0. Enter points in the Scoreboard to announce the official champion!</p>
+            <div class="champion-score-banner">Total: 0 pts</div>
+          </div>
+        `;
+      } else if (isTie) {
+        // Tie for 1st place
+        const winnerNames = winners.map(w => w.name).join(' & ');
+        const allPlayers = winners.map(w => `${w.player1} & ${w.player2}`).join(' vs ');
+        html += `
+          <div class="duo-winner-champion-card">
+            <div class="champion-rank-pill">🤝 TIE FOR 1ST PLACE!</div>
+            <div class="champion-team-name">${winnerNames}</div>
+            <div class="champion-players">Co-Champions: ${allPlayers}</div>
+            <div class="champion-score-banner">🏆 Tied at ${topScore} Points!</div>
+          </div>
+        `;
+      } else {
+        // Single Winner
+        const champ = winners[0];
+        html += `
+          <div class="duo-winner-champion-card">
+            <div class="champion-rank-pill">🥇 1ST PLACE </div>
+            <div class="champion-team-name">${champ.name}</div>
+            <div class="champion-players">${champ.player1} & ${champ.player2}</div>
+            <div class="champion-score-banner"> ${champ.total} Points!</div>
+            <div style="font-size: 0.82rem; color: #78350f; margin-top: 0.35rem; font-weight: 700;">
+              R1: ${champ.r1} • R2: ${champ.r2} • R3: ${champ.r3} • R4: ${champ.r4}
+            </div>
+          </div>
+        `;
+      }
+
+      // Standings leaderboard list for all teams
+      html += `
+        <div style="text-align: left; margin-top: 0.5rem;">
+          <div style="font-size: 0.78rem; font-weight: 800; text-transform: uppercase; color: #64748b; margin-bottom: 0.4rem; letter-spacing: 0.06em;">
+            Tournament Leaderboard
+          </div>
+          <div class="duo-winner-standings">
+      `;
+
+      standings.forEach((team, idx) => {
+        const rankIcon = idx === 0 && team.total > 0 ? '🥇' : (idx === 1 && team.total > 0 ? '🥈' : (idx === 2 && team.total > 0 ? '🥉' : `#${idx + 1}`));
+        html += `
+          <div class="duo-standing-row">
+            <div class="duo-standing-left">
+              <span class="duo-standing-rank">${rankIcon}</span>
+              <div>
+                <span class="duo-standing-name">${team.name}</span>
+                <span style="font-size: 0.76rem; color: #64748b; margin-left: 0.35rem;">(${team.player1} & ${team.player2})</span>
+              </div>
+            </div>
+            <div class="duo-standing-score">${team.total} pts</div>
+          </div>
+        `;
+      });
+
+      html += `
+          </div>
+        </div>
+      `;
+
+      this.dom.winnerModalContent.innerHTML = html;
+    }
+
+    // Show modal & trigger confetti
+    this.dom.winnerModal.classList.add('active');
+    this.launchConfetti();
+  }
+
+  closeWinnerModal() {
+    this.dom.winnerModal.classList.remove('active');
+    if (this.confettiAnimationId) {
+      cancelAnimationFrame(this.confettiAnimationId);
+      this.confettiAnimationId = null;
+    }
+    const canvas = this.dom.confettiCanvas;
+    if (canvas) {
+      const ctx = canvas.getContext('2d');
+      if (ctx) ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+  }
+
+  launchConfetti() {
+    const canvas = this.dom.confettiCanvas;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    // Cancel existing animation loop if running
+    if (this.confettiAnimationId) {
+      cancelAnimationFrame(this.confettiAnimationId);
+    }
+
+    // Set canvas dimensions to window size
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const colors = [
+      '#58CC02', // Duolingo green
+      '#1cb0f6', // Duolingo blue
+      '#ff9600', // Duolingo orange
+      '#ff4b4b', // Duolingo red
+      '#ffd900', // Gold yellow
+      '#a855f7', // Purple
+      '#ec4899', // Pink
+      '#10b981'  // Emerald
+    ];
+
+    const particleCount = 160;
+    this.confettiParticles = [];
+
+    for (let i = 0; i < particleCount; i++) {
+      this.confettiParticles.push({
+        x: canvas.width / 2 + (Math.random() - 0.5) * (canvas.width * 0.4),
+        y: canvas.height * 0.35 + (Math.random() - 0.5) * 80,
+        w: Math.random() * 12 + 6,
+        h: Math.random() * 8 + 4,
+        color: colors[Math.floor(Math.random() * colors.length)],
+        vx: (Math.random() - 0.5) * 18,
+        vy: (Math.random() * -18) - 4,
+        gravity: 0.45 + Math.random() * 0.25,
+        drag: 0.96,
+        rotation: Math.random() * 360,
+        rotationSpeed: (Math.random() - 0.5) * 14,
+        opacity: 1,
+        fadeSpeed: 0.003 + Math.random() * 0.004,
+        shape: Math.random() > 0.3 ? 'rect' : 'circle'
+      });
+    }
+
+    const render = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      let activeParticles = 0;
+
+      for (let i = 0; i < this.confettiParticles.length; i++) {
+        const p = this.confettiParticles[i];
+
+        if (p.opacity <= 0 || p.y > canvas.height + 40) continue;
+
+        activeParticles++;
+
+        // Update physics
+        p.vx *= p.drag;
+        p.vy = (p.vy * p.drag) + p.gravity;
+        p.x += p.vx;
+        p.y += p.vy;
+        p.rotation += p.rotationSpeed;
+        p.opacity -= p.fadeSpeed;
+
+        // Render particle
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.rotate((p.rotation * Math.PI) / 180);
+        ctx.globalAlpha = Math.max(0, p.opacity);
+        ctx.fillStyle = p.color;
+
+        if (p.shape === 'circle') {
+          ctx.beginPath();
+          ctx.arc(0, 0, p.w / 2, 0, Math.PI * 2);
+          ctx.fill();
+        } else {
+          ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+        }
+
+        ctx.restore();
+      }
+
+      if (activeParticles > 0) {
+        this.confettiAnimationId = requestAnimationFrame(render);
+      } else {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        this.confettiAnimationId = null;
+      }
+    };
+
+    this.confettiAnimationId = requestAnimationFrame(render);
   }
 }
 

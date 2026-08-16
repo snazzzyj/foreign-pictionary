@@ -126,4 +126,37 @@ export class SoundFX {
       osc.stop(now + offset + 0.18);
     });
   }
+
+  playVictoryFanfare() {
+    if (this.muted) return;
+    this.init();
+    if (!this.ctx) return;
+
+    const now = this.ctx.currentTime;
+    // Chords / notes for a celebratory triumphant fanfare: C4, G4, C5, E5, G5, C6
+    const notes = [
+      { f: 523.25, time: 0, dur: 0.15 },     // C5
+      { f: 659.25, time: 0.12, dur: 0.15 },  // E5
+      { f: 783.99, time: 0.24, dur: 0.18 },  // G5
+      { f: 1046.50, time: 0.40, dur: 0.7 }   // C6 held
+    ];
+
+    notes.forEach(note => {
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(note.f, now + note.time);
+
+      gain.gain.setValueAtTime(0.001, now + note.time);
+      gain.gain.exponentialRampToValueAtTime(0.3, now + note.time + 0.03);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + note.time + note.dur);
+
+      osc.connect(gain);
+      gain.connect(this.ctx.destination);
+
+      osc.start(now + note.time);
+      osc.stop(now + note.time + note.dur);
+    });
+  }
 }
