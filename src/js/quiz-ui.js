@@ -145,7 +145,7 @@ class QuizApp {
 
   bindEvents() {
     // Navigation Tabs
-    this.dom.tabs.forEach(tab => {
+    this.dom.tabs?.forEach(tab => {
       tab.addEventListener('click', () => {
         const target = tab.dataset.target;
         this.switchTab(target);
@@ -153,44 +153,48 @@ class QuizApp {
     });
 
     // Stage Next / Prev
-    this.dom.btnPrevQ.addEventListener('click', () => this.prevQuestion());
-    this.dom.btnNextQ.addEventListener('click', () => this.nextQuestion());
+    this.dom.btnPrevQ?.addEventListener('click', () => this.prevQuestion());
+    this.dom.btnNextQ?.addEventListener('click', () => this.nextQuestion());
 
     // Reveal Answer
-    this.dom.btnRevealAnswer.addEventListener('click', () => this.toggleRevealCurrentQuestion());
+    this.dom.btnRevealAnswer?.addEventListener('click', () => this.toggleRevealCurrentQuestion());
 
-    // Grid View Toggles
-    this.dom.btnToggleGrid.addEventListener('click', () => this.toggleGridView());
-    this.dom.btnGridBackToSingle.addEventListener('click', () => this.toggleGridView(false));
-    this.dom.btnGridToggleAnswers.addEventListener('click', () => {
+    // Grid View Toggles (if present)
+    this.dom.btnToggleGrid?.addEventListener('click', () => this.toggleGridView());
+    this.dom.btnGridBackToSingle?.addEventListener('click', () => this.toggleGridView(false));
+    this.dom.btnGridToggleAnswers?.addEventListener('click', () => {
       this.showAnswersInGrid = !this.showAnswersInGrid;
-      this.dom.btnGridToggleAnswers.textContent = this.showAnswersInGrid ? 'Hide Answers' : 'Show Answer Keys';
+      if (this.dom.btnGridToggleAnswers) {
+        this.dom.btnGridToggleAnswers.textContent = this.showAnswersInGrid ? 'Hide Answers' : 'Show Answer Keys';
+      }
       this.renderAllQuestionsGrid();
     });
 
     // Audio Mute Toggle
-    this.dom.btnMute.addEventListener('click', () => {
+    this.dom.btnMute?.addEventListener('click', () => {
       const isMuted = this.sound.toggleMute();
-      this.dom.btnMute.innerHTML = isMuted ? '🔇 Muted' : '🔊 Sound FX';
+      if (this.dom.btnMute) {
+        this.dom.btnMute.innerHTML = isMuted ? '🔇 Muted' : '🔊 Sound FX';
+      }
     });
 
     // Fullscreen Toggle
-    this.dom.btnFullscreen.addEventListener('click', () => this.toggleFullscreen());
+    this.dom.btnFullscreen?.addEventListener('click', () => this.toggleFullscreen());
 
     // Scores Modal
-    this.dom.btnScoresModal.addEventListener('click', () => {
+    this.dom.btnScoresModal?.addEventListener('click', () => {
       this.renderTeamsTable();
-      this.dom.scoresModal.classList.add('active');
+      this.dom.scoresModal?.classList.add('active');
     });
-    this.dom.btnCloseScores.addEventListener('click', () => this.dom.scoresModal.classList.remove('active'));
-    this.dom.btnAddTeam.addEventListener('click', () => this.addNewTeam());
+    this.dom.btnCloseScores?.addEventListener('click', () => this.dom.scoresModal?.classList.remove('active'));
+    this.dom.btnAddTeam?.addEventListener('click', () => this.addNewTeam());
 
     // Answer Key Modal
-    this.dom.btnAnswerKeyModal.addEventListener('click', () => {
+    this.dom.btnAnswerKeyModal?.addEventListener('click', () => {
       this.renderAnswerKeyModal();
-      this.dom.answerKeyModal.classList.add('active');
+      this.dom.answerKeyModal?.classList.add('active');
     });
-    this.dom.btnCloseAnswerKey.addEventListener('click', () => this.dom.answerKeyModal.classList.remove('active'));
+    this.dom.btnCloseAnswerKey?.addEventListener('click', () => this.dom.answerKeyModal?.classList.remove('active'));
 
     // Speech Pronunciation button on Stage
     this.dom.btnSpeakStage?.addEventListener('click', () => this.speakCurrentQuestion());
@@ -213,15 +217,17 @@ class QuizApp {
         this.toggleFullscreen();
       } else if (e.key.toLowerCase() === 'm') {
         const isMuted = this.sound.toggleMute();
-        this.dom.btnMute.innerHTML = isMuted ? '🔇 Muted' : '🔊 Sound FX';
+        if (this.dom.btnMute) {
+          this.dom.btnMute.innerHTML = isMuted ? '🔇 Muted' : '🔊 Sound FX';
+        }
       } else if (e.key.toLowerCase() === 'p' || e.key.toLowerCase() === 'l') {
         this.speakCurrentQuestion();
       } else if (e.key >= '1' && e.key <= '8') {
         const qNum = parseInt(e.key, 10) - 1;
         this.goToQuestion(qNum);
       } else if (e.key === 'Escape') {
-        this.dom.scoresModal.classList.remove('active');
-        this.dom.answerKeyModal.classList.remove('active');
+        this.dom.scoresModal?.classList.remove('active');
+        this.dom.answerKeyModal?.classList.remove('active');
         this.closeWinnerModal();
       }
     });
@@ -245,7 +251,7 @@ class QuizApp {
     this.dom.btnWinnerScoreboard?.addEventListener('click', () => {
       this.closeWinnerModal();
       this.renderTeamsTable();
-      this.dom.scoresModal.classList.add('active');
+      this.dom.scoresModal?.classList.add('active');
     });
     this.dom.btnWinnerConfettiReplay?.addEventListener('click', () => {
       this.sound.playVictoryFanfare();
@@ -255,7 +261,7 @@ class QuizApp {
     // Shortcut button on Duolingo unit banner to open scoreboard
     this.dom.btnIntroScoresShortcut?.addEventListener('click', () => {
       this.renderTeamsTable();
-      this.dom.scoresModal.classList.add('active');
+      this.dom.scoresModal?.classList.add('active');
     });
 
     // Interactive round showcase buttons on intro screen
@@ -506,7 +512,10 @@ class QuizApp {
 
   getBestVoice(targetLocale) {
     if (!('speechSynthesis' in window)) return null;
-    const voices = window.speechSynthesis.getVoices();
+    let voices = window.speechSynthesis.getVoices();
+    if (!voices || voices.length === 0) {
+      voices = window.speechSynthesis.getVoices();
+    }
     if (!voices || voices.length === 0) return null;
 
     const targetLang = targetLocale.toLowerCase().replace('_', '-');
@@ -514,7 +523,7 @@ class QuizApp {
 
     // Filter voices matching exact locale or language prefix
     const matchingVoices = voices.filter(v => {
-      const vLang = v.lang.toLowerCase().replace('_', '-');
+      const vLang = (v.lang || '').toLowerCase().replace('_', '-');
       return vLang === targetLang || vLang.startsWith(langPrefix);
     });
 
@@ -524,12 +533,12 @@ class QuizApp {
     matchingVoices.sort((a, b) => {
       const scoreVoice = (v) => {
         let score = 0;
-        const vLang = v.lang.toLowerCase().replace('_', '-');
+        const vLang = (v.lang || '').toLowerCase().replace('_', '-');
         if (vLang === targetLang) score += 10;
-        const name = v.name.toLowerCase();
+        const name = (v.name || '').toLowerCase();
         if (name.includes('google')) score += 25;
-        if (name.includes('enhanced') || name.includes('premium') || name.includes('natural')) score += 20;
-        if (name.includes('compact')) score -= 25;
+        if (name.includes('enhanced') || name.includes('premium') || name.includes('natural') || name.includes('siri')) score += 20;
+        if (name.includes('compact')) score -= 15;
         if (v.default) score += 2;
         return score;
       };
@@ -548,28 +557,51 @@ class QuizApp {
     const textToSpeak = this.cleanSpeechText(rawText);
     if (!textToSpeak) return;
 
+    if (window.speechSynthesis.paused) {
+      window.speechSynthesis.resume();
+    }
     window.speechSynthesis.cancel(); // Stop previous utterance immediately
 
     const targetLocale = LANG_SPEECH_CODES[language] || 'en-US';
     const utterance = new SpeechSynthesisUtterance(textToSpeak);
     utterance.lang = targetLocale;
-    // Pacing: 0.95 gives natural, fluent rhythm (0.85 can distort glottal stops / vowels in Danish and Swedish)
     utterance.rate = 0.95;
+
+    // Retain a persistent reference to prevent Chrome garbage collection of active utterance
+    this.activeUtterance = utterance;
+    window._quizActiveUtterance = utterance;
+
+    const clearButton = () => {
+      if (buttonEl) buttonEl.classList.remove('playing');
+      if (this.activeUtterance === utterance) {
+        this.activeUtterance = null;
+        window._quizActiveUtterance = null;
+      }
+    };
 
     if (buttonEl) {
       buttonEl.classList.add('playing');
-      const resetBtn = () => buttonEl.classList.remove('playing');
-      utterance.onend = resetBtn;
-      utterance.onerror = resetBtn;
     }
 
-    // Select the best quality voice (Google/Enhanced/Natural)
+    utterance.onend = clearButton;
+    utterance.onerror = (e) => {
+      console.warn('Speech synthesis error:', e);
+      clearButton();
+    };
+
+    // Select the best quality voice (Google/Enhanced/Natural/System)
     const bestVoice = this.getBestVoice(targetLocale);
     if (bestVoice) {
       utterance.voice = bestVoice;
     }
 
-    window.speechSynthesis.speak(utterance);
+    // Defer speak slightly to allow browser audio engine to cleanly process cancel()
+    setTimeout(() => {
+      if (window.speechSynthesis.paused) {
+        window.speechSynthesis.resume();
+      }
+      window.speechSynthesis.speak(utterance);
+    }, 20);
   }
 
   speakWord(rawText, language, buttonEl = null, audioUrl = null) {
