@@ -126,7 +126,7 @@ body {
 
 .btn-glass:hover {
   color: var(--text-primary);
-  background: #808489;
+  background: #e5e5e5;
   filter: none;
 }
 

@@ -778,7 +778,7 @@ class QuizApp {
     let html = `
       <div style="display: flex; flex-direction: column; gap: 1.5rem;">
         <div>
-          <h4 style="color: #f59e0b; margin-bottom: 0.75rem; font-size: 1.15rem;">🔞 Round 1: Innuendo Lingo — Master Answers</h4>
+          <h4 style="color: var(--text-primary); margin-bottom: 0.75rem; font-size: 1.15rem;">🔞 Round 1: Innuendo Lingo — Master Answers</h4>
           <div class="answer-key-row header">
             <span>#</span>
             <span>Language</span>
@@ -795,10 +795,10 @@ class QuizApp {
           <strong>${q.number}</strong>
           <span>${q.flag} ${q.language}</span>
           <div>
-            <strong>${q.word}</strong> <span style="color:#93c5fd; font-size:0.85rem;">(${q.pronunciation})</span>
-            <div style="color: #fde68a; font-size:0.85rem; font-style:italic;">"${q.sentence}"</div>
+            <strong>${q.word}</strong> <span style="color: var(--color-info); font-size:0.85rem;">(${q.pronunciation})</span>
+            <div style="color: var(--text-muted); font-size:0.85rem; font-style:italic;">"${q.sentence}"</div>
           </div>
-          <div style="color: #34d399; font-weight:700;">
+          <div style="color: var(--color-green); font-weight:700;">
             ${correctOpt.key}) ${correctOpt.text}
           </div>
         </div>
@@ -808,7 +808,7 @@ class QuizApp {
     html += `
         </div>
         <div>
-          <h4 style="color: #10b981; margin-bottom: 0.75rem; font-size: 1.15rem;">🤪 Round 2: Phunny Phrases — Master Answers</h4>
+          <h4 style="color: var(--text-primary); margin-bottom: 0.75rem; font-size: 1.15rem;">🤪 Round 2: Phunny Phrases — Master Answers</h4>
           <div class="answer-key-row header">
             <span>#</span>
             <span>Language</span>
@@ -824,9 +824,9 @@ class QuizApp {
           <span>${q.flag} ${q.language}</span>
           <div>
             <strong>${q.phrase}</strong>
-            <div style="color:#a7f3d0; font-size:0.85rem;">Literal: "${q.literalMeaning}"</div>
+            <div style="color: var(--text-muted); font-size:0.85rem;">Literal: "${q.literalMeaning}"</div>
           </div>
-          <div style="color: #38bdf8; font-weight:700;">
+          <div style="color: var(--color-info); font-weight:700;">
             "${q.actualMeaning}"
           </div>
         </div>
