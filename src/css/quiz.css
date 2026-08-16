@@ -240,8 +240,13 @@
 }
 
 @keyframes duoFloat {
-  0% { transform: translateY(0); }
-  100% { transform: translateY(-6px); }
+  0% {
+    transform: translateY(0);
+  }
+
+  100% {
+    transform: translateY(-6px);
+  }
 }
 
 /* --------------------------------------------------------------------------
@@ -249,7 +254,7 @@
    -------------------------------------------------------------------------- */
 .duo-level-btn {
   width: 84px;
-  height: 84px;
+  height: 64px;
   border-radius: 50%;
   border: none;
   cursor: pointer;
@@ -275,14 +280,14 @@
 }
 
 .duo-level-icon {
-  font-size: 2.1rem;
+  font-size: 1.5rem;
   line-height: 1;
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
   transition: transform 0.2s ease;
 }
 
 .duo-level-btn:hover .duo-level-icon {
-  transform: scale(1.15) rotate(4deg);
+  transform: scale(1) rotate(4deg);
 }
 
 /* Star / Crown badge */
@@ -305,49 +310,49 @@
 /* Duolingo Color Themes for 3D buttons */
 .duo-color-green {
   background: #58CC02;
-  box-shadow: 0 9px 0 #46a302, 0 16px 20px rgba(88, 204, 2, 0.3);
+  box-shadow: 0 8px 0 #46a302, 0 14px 18px rgba(88, 204, 2, 0.3);
 }
 
 .duo-color-green:hover {
   background: #61db02;
-  box-shadow: 0 11px 0 #46a302, 0 20px 25px rgba(88, 204, 2, 0.4);
+  box-shadow: 0 10px 0 #46a302, 0 18px 22px rgba(88, 204, 2, 0.4);
   transform: translateY(-2px);
 }
 
 .duo-color-green:active {
-  transform: translateY(7px);
+  transform: translateY(6px);
   box-shadow: 0 2px 0 #46a302, 0 4px 8px rgba(88, 204, 2, 0.2);
 }
 
 .duo-color-blue {
   background: #1cb0f6;
-  box-shadow: 0 9px 0 #1899d6, 0 16px 20px rgba(28, 176, 246, 0.3);
+  box-shadow: 0 8px 0 #1899d6, 0 14px 18px rgba(28, 176, 246, 0.3);
 }
 
 .duo-color-blue:hover {
   background: #28b9fd;
-  box-shadow: 0 11px 0 #1899d6, 0 20px 25px rgba(28, 176, 246, 0.4);
+  box-shadow: 0 10px 0 #1899d6, 0 18px 22px rgba(28, 176, 246, 0.4);
   transform: translateY(-2px);
 }
 
 .duo-color-blue:active {
-  transform: translateY(7px);
+  transform: translateY(6px);
   box-shadow: 0 2px 0 #1899d6, 0 4px 8px rgba(28, 176, 246, 0.2);
 }
 
 .duo-color-orange {
   background: #ff9600;
-  box-shadow: 0 9px 0 #e68700, 0 16px 20px rgba(255, 150, 0, 0.3);
+  box-shadow: 0 8px 0 #e68700, 0 14px 18px rgba(255, 150, 0, 0.3);
 }
 
 .duo-color-orange:hover {
   background: #ffa31a;
-  box-shadow: 0 11px 0 #e68700, 0 20px 25px rgba(255, 150, 0, 0.4);
+  box-shadow: 0 10px 0 #e68700, 0 18px 22px rgba(255, 150, 0, 0.4);
   transform: translateY(-2px);
 }
 
 .duo-color-orange:active {
-  transform: translateY(7px);
+  transform: translateY(6px);
   box-shadow: 0 2px 0 #e68700, 0 4px 8px rgba(255, 150, 0, 0.2);
 }
 
@@ -461,8 +466,15 @@
 }
 
 @keyframes chestPulse {
-  0% { transform: translate(-50%, -50%) scale(0.85); opacity: 0.5; }
-  100% { transform: translate(-50%, -50%) scale(1.15); opacity: 1; }
+  0% {
+    transform: translate(-50%, -50%) scale(0.85);
+    opacity: 0.5;
+  }
+
+  100% {
+    transform: translate(-50%, -50%) scale(1.15);
+    opacity: 1;
+  }
 }
 
 .duo-chest-btn:hover {
@@ -707,8 +719,15 @@
 }
 
 @keyframes pulse-speak {
-  0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(250, 204, 21, 0.4); }
-  100% { transform: scale(1.05); box-shadow: 0 0 14px 2px rgba(250, 204, 21, 0.25); }
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(250, 204, 21, 0.4);
+  }
+
+  100% {
+    transform: scale(1.05);
+    box-shadow: 0 0 14px 2px rgba(250, 204, 21, 0.25);
+  }
 }
 
 .btn-speak-inline {
@@ -1190,8 +1209,15 @@
 }
 
 @keyframes duoModalPop {
-  0% { transform: scale(0.7) translateY(40px); opacity: 0; }
-  100% { transform: scale(1) translateY(0); opacity: 1; }
+  0% {
+    transform: scale(0.7) translateY(40px);
+    opacity: 0;
+  }
+
+  100% {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+  }
 }
 
 .btn-winner-close {
@@ -1242,8 +1268,13 @@
 }
 
 @keyframes trophyBounce {
-  0% { transform: translateY(0) scale(1) rotate(-3deg); }
-  100% { transform: translateY(-10px) scale(1.08) rotate(3deg); }
+  0% {
+    transform: translateY(0) scale(1) rotate(-3deg);
+  }
+
+  100% {
+    transform: translateY(-10px) scale(1.08) rotate(3deg);
+  }
 }
 
 .chest-celebration-burst {
@@ -1255,8 +1286,17 @@
 }
 
 @keyframes burstPulse {
-  0%, 100% { transform: scale(0.9); opacity: 0.6; }
-  50% { transform: scale(1.3); opacity: 1; }
+
+  0%,
+  100% {
+    transform: scale(0.9);
+    opacity: 0.6;
+  }
+
+  50% {
+    transform: scale(1.3);
+    opacity: 1;
+  }
 }
 
 .duo-winner-badge {
