@@ -11,26 +11,25 @@
   <!-- Header Bar -->
   <header class="app-header">
     <div class="brand-section">
-      <span class="brand-icon">🎨</span>
       <div>
-        <h1 class="brand-title">Foreigner Pictionary</h1>
-        <p class="brand-subtitle">Host & Drawer Controller</p>
+        <h1 class="brand-title">Foreign Pictionary</h1>
+        <p class="brand-subtitle">Host & Drawer</p>
       </div>
     </div>
 
     <div style="display: flex; align-items: center; gap: 0.75rem;">
-      <a href="quiz.html" class="btn btn-glass" style="padding: 0.5rem 0.9rem; font-size: 0.85rem;" title="Go to Games Night Quiz Screen">
-        🎯 Quiz Screen
+      <a href="quiz.html" class="btn btn-glass" title="Go to Games Night Quiz Screen">
+        Quiz Screen
       </a>
       <button id="btn-open-crowd" class="screen-link-btn" title="Open Crowd Screen on 2nd monitor">
         <span class="screen-link-indicator"></span>
-        <span>📺 Launch Crowd Screen</span>
+        <span>Crowd Screen</span>
       </button>
-      <button id="btn-rules" class="btn btn-glass" style="padding: 0.5rem 0.9rem; font-size: 0.85rem;">
-        📖 Rules
+      <button id="btn-rules" class="btn btn-glass">
+        Rules
       </button>
-      <button id="btn-mute" class="btn btn-glass" style="padding: 0.5rem 0.9rem; font-size: 0.85rem;">
-        🔊 Sound FX
+      <button id="btn-mute" class="btn btn-glass">
+        Sound
       </button>
     </div>
   </header>
@@ -42,15 +41,15 @@
       <!-- Language Selector Tabs -->
       <div class="language-selector">
         <button class="lang-tab active" data-lang="swedish" id="tab-swedish">
-          <span>🇸🇪 Swedish</span>
+          <span>Swedish</span>
           <span class="lang-count">100/100</span>
         </button>
         <button class="lang-tab" data-lang="mandarin" id="tab-mandarin">
-          <span>🇨🇳 Mandarin</span>
+          <span>Mandarin</span>
           <span class="lang-count">100/100</span>
         </button>
         <button class="lang-tab" data-lang="indonesian" id="tab-indonesian">
-          <span>🇮🇩 Indonesian</span>
+          <span>Indonesian</span>
           <span class="lang-count">100/100</span>
         </button>
       </div>
@@ -64,24 +63,24 @@
 
     <!-- Status Overview Cards -->
     <section class="status-grid">
-      <div class="glass-panel status-card">
-        <span class="status-label">Current Round</span>
-        <span class="status-value" id="status-round">Round 1/12</span>
+      <div class="status-card">
+        <span class="status-label">Round</span>
+        <span class="status-value" id="status-round">1 / 12</span>
       </div>
 
-      <div class="glass-panel status-card">
-        <span class="status-label">Round Score</span>
-        <span class="status-value score" id="status-score">0 pts</span>
+      <div class="status-card">
+        <span class="status-label">Score</span>
+        <span class="status-value score" id="status-score">0</span>
       </div>
 
-      <div class="glass-panel status-card">
+      <div class="status-card">
         <span class="status-label">Timer</span>
-        <span class="status-value timer" id="status-timer">60s</span>
+        <span class="status-value timer" id="status-timer">60</span>
       </div>
 
-      <div class="glass-panel status-card">
-        <span class="status-label">Deck Status</span>
-        <span class="status-value" id="status-remaining" style="font-size: 1.3rem; color: var(--text-secondary);">100 left</span>
+      <div class="status-card">
+        <span class="status-label">Remaining</span>
+        <span class="status-value" id="status-remaining">100</span>
       </div>
     </section>
 
@@ -89,8 +88,8 @@
     <section class="card-stage">
       <div class="drawer-card enter-anim" id="drawer-card">
         <div class="card-badge-row">
-          <span class="secret-label" id="card-secret-label">🔒 Secret Prompt (Host & Drawer Only)</span>
-          <span class="word-index" id="card-word-index">Card #1</span>
+          <span class="secret-label" id="card-secret-label">Host & Drawer Only</span>
+          <span class="word-index" id="card-word-index">#1</span>
         </div>
 
         <!-- English Word (What the Drawer Draws) -->
@@ -104,46 +103,44 @@
       </div>
 
       <!-- Empty Deck State -->
-      <div class="glass-panel empty-deck-state" id="card-empty" style="width: 100%; justify-content: center;">
-        <span style="font-size: 3rem;">🎉</span>
-        <h3>Deck Complete!</h3>
-        <p style="color: var(--text-muted);">All 100 words have been drawn for this language.</p>
-        <button id="btn-reset-deck" class="btn btn-primary">Reshuffle Language Deck</button>
+      <div class="glass-panel empty-deck-state" id="card-empty" style="width: 100%;">
+        <h3 style="font-weight: 400;">Deck Complete</h3>
+        <p style="color: var(--text-muted); font-size: 0.9rem;">All 100 words have been drawn for this language.</p>
+        <button id="btn-reset-deck" class="btn btn-primary">Reshuffle Deck</button>
       </div>
     </section>
 
     <!-- Primary Action Grid (Correct / Skip) -->
     <section class="action-grid">
       <button id="btn-skip" class="btn btn-skip action-btn" title="Skip to next word (Shortcut: S or Right Arrow)">
-        <span>⏩ SKIP</span>
-        <span class="btn-shortcut">Press [S] or [▶]</span>
+        <span>Skip</span>
+        <span class="btn-shortcut">S or →</span>
       </button>
 
       <button id="btn-correct" class="btn btn-success action-btn" title="Correct guess (+1 point) (Shortcut: Space or Enter)">
-        <span>✅ CORRECT (+1 POINT)</span>
-        <span class="btn-shortcut">Press [SPACE] or [ENTER]</span>
+        <span>Correct — +1</span>
+        <span class="btn-shortcut">Space or Enter</span>
       </button>
     </section>
 
     <!-- Timer & Secondary Controls Toolbar -->
-    <section class="glass-panel timer-toolbar">
+    <section class="timer-toolbar">
       <div style="display: flex; align-items: center; gap: 0.75rem;">
-        <span style="font-weight: 700; font-size: 0.95rem;">Timer Controls:</span>
-        <button id="btn-timer-toggle" class="btn btn-primary">▶ Start 60s</button>
-        <button id="btn-timer-reset" class="btn btn-glass">↺ Reset</button>
+        <button id="btn-timer-toggle" class="btn btn-primary">Start 60s</button>
+        <button id="btn-timer-reset" class="btn btn-glass">Reset</button>
       </div>
 
-      <div style="color: var(--text-muted); font-size: 0.85rem;">
-        <span>Press <kbd class="key-badge">P</kbd> to Pause/Play • <kbd class="key-badge">R</kbd> to Reset</span>
+      <div style="color: var(--text-muted); font-size: 0.8rem;">
+        <span><kbd class="key-badge">P</kbd> Pause &nbsp; <kbd class="key-badge">R</kbd> Reset</span>
       </div>
     </section>
 
     <!-- Keyboard Shortcuts Legend Footer -->
     <footer class="host-footer">
-      <div>Foreigner Pictionary • Multi-Screen Session</div>
+      <div>Foreign Pictionary</div>
       <div class="keyboard-hints">
-        <span><kbd class="key-badge">Space</kbd> / <kbd class="key-badge">Enter</kbd> Correct</span>
-        <span><kbd class="key-badge">S</kbd> / <kbd class="key-badge">➔</kbd> Skip</span>
+        <span><kbd class="key-badge">Space</kbd> Correct</span>
+        <span><kbd class="key-badge">S</kbd> Skip</span>
         <span><kbd class="key-badge">P</kbd> Timer</span>
       </div>
     </footer>
@@ -153,8 +150,8 @@
   <div class="modal-overlay" id="rules-modal">
     <div class="modal-container">
       <div class="modal-header">
-        <h3 style="font-weight: 800; font-size: 1.3rem;">🎨 Foreigner Pictionary — Rules & Setup</h3>
-        <button id="btn-close-rules" class="btn btn-glass" style="padding: 0.3rem 0.7rem;">✕</button>
+        <h3 style="font-weight: 500; font-size: 1rem;">Rules & Setup</h3>
+        <button id="btn-close-rules" class="btn btn-glass" style="padding: 0.25rem 0.6rem; font-size: 0.8rem;">✕</button>
       </div>
       <div class="modal-body" style="display: flex; flex-direction: column; gap: 1rem;">
         <div>

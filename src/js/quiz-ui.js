@@ -15,7 +15,7 @@ class QuizApp {
     this.revealedQuestions = new Set(); // Set of question keys e.g. "r1-q1"
     this.viewMode = 'single'; // 'single' | 'grid'
     this.showAnswersInGrid = false;
-    
+
     // Team Scoreboard Data from localStorage
     this.teams = this.loadTeams();
 
@@ -28,7 +28,7 @@ class QuizApp {
       allQSection: document.getElementById('quiz-all-q-section'),
       round3Section: document.getElementById('quiz-round3-section'),
       round4Section: document.getElementById('quiz-round4-section'),
-      
+
       // Question Stage Elements
       stageRoundTag: document.getElementById('stage-round-tag'),
       stageLangBadge: document.getElementById('stage-lang-badge'),
@@ -39,7 +39,7 @@ class QuizApp {
       promptForeignText: document.getElementById('prompt-foreign-text'),
       promptPronunciation: document.getElementById('prompt-pronunciation'),
       stageDynamicContent: document.getElementById('stage-dynamic-content'),
-      
+
       // Controls
       btnPrevQ: document.getElementById('btn-prev-q'),
       btnNextQ: document.getElementById('btn-next-q'),
@@ -49,7 +49,7 @@ class QuizApp {
       btnMute: document.getElementById('btn-mute'),
       btnScoresModal: document.getElementById('btn-scores-modal'),
       btnAnswerKeyModal: document.getElementById('btn-answer-key-modal'),
-      
+
       // Modals
       scoresModal: document.getElementById('scores-modal'),
       btnCloseScores: document.getElementById('btn-close-scores'),
@@ -110,7 +110,7 @@ class QuizApp {
     // Stage Next / Prev
     this.dom.btnPrevQ.addEventListener('click', () => this.prevQuestion());
     this.dom.btnNextQ.addEventListener('click', () => this.nextQuestion());
-    
+
     // Reveal Answer
     this.dom.btnRevealAnswer.addEventListener('click', () => this.toggleRevealCurrentQuestion());
 
@@ -119,7 +119,7 @@ class QuizApp {
     this.dom.btnGridBackToSingle.addEventListener('click', () => this.toggleGridView(false));
     this.dom.btnGridToggleAnswers.addEventListener('click', () => {
       this.showAnswersInGrid = !this.showAnswersInGrid;
-      this.dom.btnGridToggleAnswers.textContent = this.showAnswersInGrid ? '🙈 Hide Answers' : '👁️ Show Answer Keys';
+      this.dom.btnGridToggleAnswers.textContent = this.showAnswersInGrid ? 'Hide Answers' : 'Show Answer Keys';
       this.renderAllQuestionsGrid();
     });
 
@@ -252,15 +252,6 @@ class QuizApp {
     const qKey = `${this.currentTab}-${q.id}`;
     const isRevealed = this.revealedQuestions.has(qKey);
 
-    // Update Round Category Header Tag
-    if (this.currentTab === 'round-1') {
-      this.dom.stageRoundTag.innerHTML = `🔞 ROUND 1: INNUENDO LINGO (3-OPTION MULTICHOICE)`;
-      this.dom.stageRoundTag.style.color = '#f59e0b';
-    } else {
-      this.dom.stageRoundTag.innerHTML = `🤪 ROUND 2: PHUNNY PHRASES (GUESS ACTUAL MEANING)`;
-      this.dom.stageRoundTag.style.color = '#10b981';
-    }
-
     // Flag & Language Badge
     this.dom.stageFlag.textContent = q.flag;
     this.dom.stageLangName.textContent = q.language;
@@ -292,7 +283,7 @@ class QuizApp {
       // Context Sentence
       const sentenceEl = document.createElement('div');
       sentenceEl.className = 'context-sentence-box';
-      
+
       // Highlight word in sentence
       let sentenceHtml = q.sentence;
       const cleanWord = q.word.split(' ')[0].replace(/[()]/g, '');
@@ -300,7 +291,7 @@ class QuizApp {
       sentenceHtml = sentenceHtml.replace(regex, '<mark>$1</mark>');
 
       sentenceEl.innerHTML = `
-        <div class="context-sentence-label">📖 Sentence Context (What they actually said)</div>
+        <div class="context-sentence-label">📖 Sentence Context</div>
         <div class="context-sentence-text">"${sentenceHtml}"</div>
       `;
       this.dom.stageDynamicContent.appendChild(sentenceEl);
@@ -323,7 +314,6 @@ class QuizApp {
         card.innerHTML = `
           <div class="option-key">${opt.key}</div>
           <div class="option-text">${opt.text}</div>
-          ${isRevealed && opt.isCorrect ? '<span style="margin-left: auto; font-size: 1.4rem;">✅</span>' : ''}
         `;
 
         optionsGrid.appendChild(card);
@@ -336,8 +326,8 @@ class QuizApp {
         const factBox = document.createElement('div');
         factBox.className = 'actual-meaning-revealed';
         factBox.innerHTML = `
-          <div class="actual-meaning-title">💡 Innuendo Breakdown & Meaning</div>
-          <div class="actual-meaning-text">Correct Answer: ${q.options.find(o => o.isCorrect)?.key}) ${q.meaning}</div>
+          <div class="actual-meaning-title">CORRECT ANSWER</div>
+          <div class="actual-answer-text">${q.options.find(o => o.isCorrect)?.key}) ${q.meaning}</div>
           <div class="actual-meaning-explanation">${q.funFact}</div>
         `;
         this.dom.stageDynamicContent.appendChild(factBox);
@@ -349,20 +339,11 @@ class QuizApp {
       literalBox.className = 'literal-meaning-box';
       literalBox.innerHTML = `
         <div class="literal-label">
-          <span>🧐 Word-for-Word Literal Translation</span>
+          <span>Literal Translation</span>
         </div>
         <div class="literal-text">"${q.literalMeaning}"</div>
       `;
       this.dom.stageDynamicContent.appendChild(literalBox);
-
-      // Write on sheet callout
-      const sheetCallout = document.createElement('div');
-      sheetCallout.className = 'paper-sheet-callout';
-      sheetCallout.innerHTML = `
-        <span style="font-size: 1.4rem;">✍️</span>
-        <span><strong>Team Prompt:</strong> Discuss with your teammate and write what you think this idiom <em>actually</em> means on your answer sheet!</span>
-      `;
-      this.dom.stageDynamicContent.appendChild(sheetCallout);
 
       // If revealed, show the Actual Meaning with animation
       if (isRevealed) {
@@ -379,10 +360,10 @@ class QuizApp {
 
     // Update Reveal Button UI
     if (isRevealed) {
-      this.dom.btnRevealAnswer.innerHTML = `<span>🙈 Hide Answer</span> <kbd class="kbd-hint">Space</kbd>`;
+      this.dom.btnRevealAnswer.innerHTML = `<span>🙈 Hide Answer</span>`;
       this.dom.btnRevealAnswer.classList.add('is-revealed');
     } else {
-      this.dom.btnRevealAnswer.innerHTML = `<span>✨ Reveal Answer</span> <kbd class="kbd-hint">Space</kbd>`;
+      this.dom.btnRevealAnswer.innerHTML = `<span>✨ Reveal Answer</span>`;
       this.dom.btnRevealAnswer.classList.remove('is-revealed');
     }
 
@@ -449,7 +430,7 @@ class QuizApp {
     questions.forEach(q => {
       const card = document.createElement('div');
       card.className = 'all-q-card';
-      
+
       if (this.currentTab === 'round-1') {
         const correctOpt = q.options.find(o => o.isCorrect);
         let optionsHtml = '';
@@ -503,7 +484,7 @@ class QuizApp {
 
   renderTeamsTable() {
     this.dom.teamsTableBody.innerHTML = '';
-    
+
     this.teams.forEach((team, index) => {
       const total = (Number(team.r1) || 0) + (Number(team.r2) || 0) + (Number(team.r3) || 0) + (Number(team.r4) || 0);
       const tr = document.createElement('tr');
@@ -520,7 +501,7 @@ class QuizApp {
         <td><input type="number" min="0" max="8" class="team-score-input" value="${team.r2 || 0}" data-field="r2" data-index="${index}"></td>
         <td><input type="number" min="0" max="6" class="team-score-input" value="${team.r3 || 0}" data-field="r3" data-index="${index}"></td>
         <td><input type="number" min="0" max="100" class="team-score-input" value="${team.r4 || 0}" data-field="r4" data-index="${index}"></td>
-        <td style="font-size: 1.2rem; font-weight: 900; color: #38bdf8;">${total} pts</td>
+        <td style="font-size: 1rem; font-weight: 500; color: var(--color-info);">${total}</td>
         <td>
           <button class="btn btn-glass btn-delete-team" data-index="${index}" style="padding: 0.25rem 0.5rem; color: #f87171;" title="Delete Team">✕</button>
         </td>
@@ -575,7 +556,8 @@ class QuizApp {
             <span>#</span>
             <span>Language</span>
             <span>Foreign Word & Context</span>
-            <span>Correct Answer (Meaning)</span>
+            <span>Correct Answer</span>
+            <span style="display: block;">(Meaning)</span>
           </div>
     `;
 

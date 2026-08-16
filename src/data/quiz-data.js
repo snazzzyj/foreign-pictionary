@@ -67,7 +67,7 @@ export const QUIZ_QUESTIONS = {
       language: "Swedish",
       flag: "🇸🇪",
       word: "Böner",
-      pronunciation: "[ˈbø̌ːnɛr] (sounds like: Boner)",
+      pronunciation: "buh-ner",
       sentence: "He must remember his böner before bed.",
       meaning: "Prayers",
       options: [
@@ -75,7 +75,7 @@ export const QUIZ_QUESTIONS = {
         { key: "B", text: "Green beans", isCorrect: false },
         { key: "C", text: "Bedtime slippers", isCorrect: false }
       ],
-      funFact: "In Swedish, 'bönor' means beans and 'böner' means prayers! It may sound suggestive to English speakers, but it's completely holy."
+      funFact: "In Swedish, 'bönor' means beans and 'böner' means prayers."
     },
     {
       id: "r1-q2",
@@ -83,7 +83,7 @@ export const QUIZ_QUESTIONS = {
       language: "Mandarin",
       flag: "🇨🇳",
       word: "买那个 (Mǎi nà ge)",
-      pronunciation: "[maɪ nà ge] (sounds like: 'Buy n***a')",
+      pronunciation: "my-nah-ge",
       sentence: "She shouted to 买那个!",
       meaning: "Buy that one / Buy this one",
       options: [
@@ -91,7 +91,7 @@ export const QUIZ_QUESTIONS = {
         { key: "B", text: "Move faster", isCorrect: false },
         { key: "C", text: "Stop shouting", isCorrect: false }
       ],
-      funFact: "In Mandarin, 'nà ge' (那个) literally means 'that one' and is also the universal filler word (like 'um' or 'uh'). Foreigners often do a double-take!"
+      funFact: "In Mandarin, 'nà ge' (那个) literally means 'that one' and is also the universal filler word (like 'um' or 'uh')."
     },
     {
       id: "r1-q3",
@@ -99,8 +99,8 @@ export const QUIZ_QUESTIONS = {
       language: "Japanese",
       flag: "🇯🇵",
       word: "彫り (Hori)",
-      pronunciation: "[ho-ree] (sounds like: Whore-y)",
-      sentence: "The hori was beautiful.",
+      pronunciation: "ho-ree",
+      sentence: "The 彫り was beautiful.",
       meaning: "Carving / Engraving",
       options: [
         { key: "A", text: "Carving / Engraving", isCorrect: true },
@@ -115,15 +115,15 @@ export const QUIZ_QUESTIONS = {
       language: "Turkish",
       flag: "🇹🇷",
       word: "Seksen",
-      pronunciation: "[sek-sen] (sounds like: Sexin')",
+      pronunciation: "sek-sen",
       sentence: "Seksen skittles was too much.",
       meaning: "Eighty (80)",
       options: [
         { key: "A", text: "Eighty", isCorrect: true },
-        { key: "B", text: "Sour / Tangy", isCorrect: false },
-        { key: "C", text: "A handful", isCorrect: false }
+        { key: "B", text: "Sour", isCorrect: false },
+        { key: "C", text: "The teacher's", isCorrect: false }
       ],
-      funFact: "In Turkish, 'seksen' is simply the number 80. 'Sekiz' is 8, and 'seksen' is 80!"
+      funFact: "In Turkish, 'seksen' is simply the number 80. 'Sekiz' is 8, and 'seksen' is 80."
     },
     {
       id: "r1-q5",
@@ -131,15 +131,15 @@ export const QUIZ_QUESTIONS = {
       language: "Dutch",
       flag: "🇳🇱",
       word: "Kok",
-      pronunciation: "[kɔk] (sounds like: Cock)",
+      pronunciation: "kok",
       sentence: "She said that he had a good kok.",
-      meaning: "Cook / Chef",
+      meaning: "Chef",
       options: [
-        { key: "A", text: "Cook / Chef", isCorrect: true },
+        { key: "A", text: "Chef", isCorrect: true },
         { key: "B", text: "Sense of humor", isCorrect: false },
-        { key: "C", text: "Roasting oven", isCorrect: false }
+        { key: "C", text: "Kitchen", isCorrect: false }
       ],
-      funFact: "In Dutch, a male cook or chef is a 'kok' (from the verb 'koken' = to cook). Highly respectable in Dutch kitchens!"
+      funFact: "In Dutch, a male cook or chef is a 'kok' (from the verb 'koken' = to cook)."
     },
     {
       id: "r1-q6",
@@ -147,7 +147,7 @@ export const QUIZ_QUESTIONS = {
       language: "Finnish",
       flag: "🇫🇮",
       word: "Jesus tape",
-      pronunciation: "[jeːsus-teɪpːi] (Jeesusteippi)",
+      pronunciation: "yay-soos-tay-pee",
       sentence: "Jesus tape fixes everything.",
       meaning: "Slang for Duct Tape (binds & fixes everything just like Jesus)",
       options: [
@@ -155,15 +155,15 @@ export const QUIZ_QUESTIONS = {
         { key: "B", text: "Holy water spray", isCorrect: false },
         { key: "C", text: "Church hymn book", isCorrect: false }
       ],
-      funFact: "In Finland, duct tape is colloquially called 'Jeesusteippi' (Jesus tape) because it miraculously holds the world together and fixes any disaster!"
+      funFact: "In Finland, duct tape is colloquially called 'Jeesusteippi' (Jesus tape) because it miraculously holds the world together and fixes any disaster."
     },
     {
       id: "r1-q7",
       number: 7,
       language: "Russian",
       flag: "🇷🇺",
-      word: "Хор (Hore / Khor)",
-      pronunciation: "[xor] (sounds like: Whore)",
+      word: "Хор",
+      pronunciation: "hor",
       sentence: "He preached to the хор.",
       meaning: "Choir",
       options: [
@@ -171,7 +171,7 @@ export const QUIZ_QUESTIONS = {
         { key: "B", text: "Village crowd", isCorrect: false },
         { key: "C", text: "Town drunk", isCorrect: false }
       ],
-      funFact: "Russian 'Хор' directly means choir or chorus. Preaching to the choir takes on a whole new acoustic vibe!"
+      funFact: "Russian 'Хор' directly means choir or chorus."
     },
     {
       id: "r1-q8",
@@ -179,7 +179,7 @@ export const QUIZ_QUESTIONS = {
       language: "Hindi",
       flag: "🇮🇳",
       word: "बीच बीच में (Beech Beech Mein)",
-      pronunciation: "[biːtʃ biːtʃ mẽː] (sounds like: Bitch Bitch Mein)",
+      pronunciation: "beech beech meyn",
       sentence: "What is this song about?",
       meaning: "In between / In the middle / Intermittently",
       options: [
@@ -187,7 +187,7 @@ export const QUIZ_QUESTIONS = {
         { key: "B", text: "On the sunny beach", isCorrect: false },
         { key: "C", text: "Dancing all night", isCorrect: false }
       ],
-      funFact: "'Beech beech mein' translates to 'in between' or 'at intervals'. It's also the title of a hit Bollywood track by Shah Rukh Khan!"
+      funFact: "'Beech beech mein' translates to 'in between' or 'at intervals'."
     }
   ],
 
@@ -267,7 +267,7 @@ export const QUIZ_QUESTIONS = {
       pronunciation: "[joj jom deu-seh-yo]",
       literalMeaning: "Please eat some dick",
       actualMeaning: "Fuck off / Get lost",
-      explanation: "A delightfully polite grammatical ending ('-seyo') attached to an exceptionally vulgar insult."
+      explanation: "A delightfully polite grammatical ending ('-seyo') attached to an exceptionally vulgar insult is said with irony."
     },
     {
       id: "r2-q8",
@@ -287,8 +287,8 @@ export const QUIZ_QUESTIONS = {
     flag: "🌍",
     totalRounds: 6,
     rules: [
-      "The host will reveal mystery geographic, cultural, and landmark clues.",
-      "Teams write down the exact Country Name on their answer sheet.",
+      "You will be shown a random Google Earth location.",
+      "Write down the exact Country Name on your answer sheet.",
       "6 Rounds total (1 point per correct country)."
     ]
   },
@@ -306,3 +306,24 @@ export const QUIZ_QUESTIONS = {
     ]
   }
 };
+
+// Helper function to shuffle array elements in place using Fisher-Yates algorithm
+function shuffleArray(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+}
+
+// Randomize options for each question in Round 1 (Innuendo Lingo)
+if (QUIZ_QUESTIONS['round-1']) {
+  QUIZ_QUESTIONS['round-1'].forEach(q => {
+    if (q.options && Array.isArray(q.options)) {
+      shuffleArray(q.options);
+      const keys = ['A', 'B', 'C'];
+      q.options.forEach((opt, idx) => {
+        opt.key = keys[idx] || String.fromCharCode(65 + idx);
+      });
+    }
+  });
+}
