@@ -7,7 +7,8 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  background: #0d1520;   /* darker navy for projection screen */
+  background: #eeeeee;
+  /* darker navy for projection screen */
   user-select: none;
 }
 
@@ -114,8 +115,13 @@
 }
 
 @keyframes timerDangerPulse {
-  from { opacity: 1; }
-  to   { opacity: 0.45; }
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0.45;
+  }
 }
 
 .timer-content-overlay {
@@ -135,11 +141,16 @@
   line-height: 1;
   font-variant-numeric: tabular-nums;
   letter-spacing: -0.05em;
-  color: #ffffff;
+  color: #050505;
 }
 
-.timer-digits.warning { color: var(--color-gold); }
-.timer-digits.danger  { color: var(--color-red); }
+.timer-digits.warning {
+  color: var(--color-gold);
+}
+
+.timer-digits.danger {
+  color: var(--color-red);
+}
 
 .timer-subtext {
   font-size: 0.75rem;
@@ -252,8 +263,13 @@
 }
 
 @keyframes dotPulse {
-  from { opacity: 0.3; }
-  to   { opacity: 1; }
+  from {
+    opacity: 0.3;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 @media (max-width: 900px) {
@@ -261,11 +277,21 @@
     flex-direction: column;
     gap: 2rem;
   }
+
   .timer-radial-container {
     width: 250px;
     height: 250px;
   }
-  .timer-digits { font-size: 5.5rem; }
-  .score-number { font-size: 6rem; }
-  .crowd-score-card { padding: 1.5rem 2rem; }
+
+  .timer-digits {
+    font-size: 5.5rem;
+  }
+
+  .score-number {
+    font-size: 6rem;
+  }
+
+  .crowd-score-card {
+    padding: 1.5rem 2rem;
+  }
 }

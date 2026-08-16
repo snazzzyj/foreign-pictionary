@@ -291,7 +291,7 @@ class QuizApp {
       sentenceHtml = sentenceHtml.replace(regex, '<mark>$1</mark>');
 
       sentenceEl.innerHTML = `
-        <div class="context-sentence-label">📖 Sentence Context</div>
+        <div class="context-sentence-label">Sentence Context</div>
         <div class="context-sentence-text">"${sentenceHtml}"</div>
       `;
       this.dom.stageDynamicContent.appendChild(sentenceEl);
@@ -350,8 +350,8 @@ class QuizApp {
         const revealedBox = document.createElement('div');
         revealedBox.className = 'actual-meaning-revealed';
         revealedBox.innerHTML = `
-          <div class="actual-meaning-title">✨ True Idiomatic Meaning</div>
-          <div class="actual-meaning-text">"${q.actualMeaning}"</div>
+          <div class="actual-meaning-title">True Meaning</div>
+          <div class="actual-answer-text">"${q.actualMeaning}"</div>
           <div class="actual-meaning-explanation">${q.explanation}</div>
         `;
         this.dom.stageDynamicContent.appendChild(revealedBox);
@@ -360,10 +360,10 @@ class QuizApp {
 
     // Update Reveal Button UI
     if (isRevealed) {
-      this.dom.btnRevealAnswer.innerHTML = `<span>🙈 Hide Answer</span>`;
+      this.dom.btnRevealAnswer.innerHTML = `<span>Hide Answer</span>`;
       this.dom.btnRevealAnswer.classList.add('is-revealed');
     } else {
-      this.dom.btnRevealAnswer.innerHTML = `<span>✨ Reveal Answer</span>`;
+      this.dom.btnRevealAnswer.innerHTML = `<span>Reveal Answer</span>`;
       this.dom.btnRevealAnswer.classList.remove('is-revealed');
     }
 

@@ -1,8 +1,8 @@
 :root {
   /* ── Backgrounds ─────────────────────────────────────────── */
-  --bg-main: #e0e0e0;
+  --bg-main: #efefef;
   /* Duolingo dark navy */
-  --bg-surface: #aeb3bb;
+  --bg-surface: #e5e5e5;
   --surface-card: #f8f8f8;
   --surface-elevated: #ededed;
   --surface-line: rgba(255, 255, 255, 0.1);
